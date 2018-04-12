@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	implementation 'com.google.guava:guava:23.0'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+    
+    /* TEST GROUP */
+    testCompile "org.testfx:testfx-core:4.0.13-alpha"
+    testCompile "org.testfx:testfx-junit:4.0.13-alpha"
+}
+
+// mainClassName = 'it.uniroma1.fastcharge.carmonitor.app.Main'

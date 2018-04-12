@@ -1,0 +1,23 @@
+language: java
+
+
+
+jdk:
+	- oraclejdk8
+
+matrix:
+	- os: linux
+		sudo: false
+	- os: osx
+
+install:
+	gradle assemble
+
+jobs:
+  include:
+    # Stage Test - Job 1-2:  Builds against all available Jdks.
+    - stage: test
+      jdk: openjdk7
+      script: gradle assemble
+    - jdk: oraclejdk8
+script: mvn -q install
