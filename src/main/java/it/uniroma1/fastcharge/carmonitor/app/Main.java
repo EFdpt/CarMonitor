@@ -12,7 +12,6 @@ public class Main extends Application {
         launch(args);
     }
 
-    // JavaFX entry point
     @Override
     public void start(Stage primaryStage) throws Exception {
         String message = "Hello World!";

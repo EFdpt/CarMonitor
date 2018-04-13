@@ -1,19 +1,29 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'groovy'
+ 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    // mavenCentral()
+    jcenter()
 }
 
 dependencies {
 	implementation 'com.google.guava:guava:23.0'
 
-    // Use JUnit test framework
+	/* TEST GROUP */
     testImplementation 'junit:junit:4.12'
     
-    /* TEST GROUP */
-    testCompile "org.testfx:testfx-core:4.0.13-alpha"
-    testCompile "org.testfx:testfx-junit:4.0.13-alpha"
+    testCompile("org.testfx:testfx-core:4.0.13-alpha",
+				"org.testfx:testfx-junit:4.0.13-alpha",
+    			"org.codehaus.groovy:groovy-all:2.4.4",
+    			"org.spockframework:spock-core:1.0-groovy-2.4"
+    )
+    testRuntime(
+            'com.athaydes:spock-reports:1.2.7'
+    )
 }
 
 // mainClassName = 'it.uniroma1.fastcharge.carmonitor.app.Main'
