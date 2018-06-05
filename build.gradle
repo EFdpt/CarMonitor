@@ -6,12 +6,15 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    // mavenCentral()
+    //mavenCentral()
     jcenter()
 }
 
 dependencies {
 	implementation 'com.google.guava:guava:23.0'
+	
+	compile 'com.jfoenix:jfoenix:8.0.3'
+	compile 'com.fazecast:jSerialComm:2.0.2'
 
 	/* TEST GROUP */
     testImplementation 'junit:junit:4.12'
@@ -21,9 +24,10 @@ dependencies {
     			"org.codehaus.groovy:groovy-all:2.4.4",
     			"org.spockframework:spock-core:1.0-groovy-2.4"
     )
+    
     testRuntime(
-            'com.athaydes:spock-reports:1.2.7'
+            "com.athaydes:spock-reports:1.2.7"
     )
 }
 
-// mainClassName = 'it.uniroma1.fastcharge.carmonitor.app.Main'
+mainClassName = "it.uniroma1.fastcharge.carmonitor.app.MainApp"
