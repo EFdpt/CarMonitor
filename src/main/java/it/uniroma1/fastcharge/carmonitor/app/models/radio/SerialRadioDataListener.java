@@ -10,7 +10,6 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
-import it.uniroma1.fastcharge.carmonitor.app.models.car.CarRadioAdapter;
 
 public class SerialRadioDataListener implements SerialPortDataListener {
 
@@ -24,7 +23,7 @@ public class SerialRadioDataListener implements SerialPortDataListener {
 		if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
 	         return;
 		byte[] recvBuffer = new byte[event.getSerialPort().bytesAvailable()];
-		int numRead = event.getSerialPort().readBytes(recvBuffer, recvBuffer.length);
+		event.getSerialPort().readBytes(recvBuffer, recvBuffer.length);
 		
 		// deserialize recvBuffer
 		try {

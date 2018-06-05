@@ -1,17 +1,17 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 public class Pedals {
-	private byte tps1;
-	private byte tps1_min;
-	private byte tps1_max;
+	private volatile byte tps1;
+	private volatile byte tps1_min;
+	private volatile byte tps1_max;
 	
-	private byte tps2;
-	private byte tps2_min;
-	private byte tps2_max;
+	private volatile byte tps2;
+	private volatile byte tps2_min;
+	private volatile byte tps2_max;
 	
-	private byte brake;
-	private byte brake_min;
-	private byte brake_max;
+	private volatile byte brake;
+	private volatile byte brake_min;
+	private volatile byte brake_max;
 	
 	public Pedals() {}
 

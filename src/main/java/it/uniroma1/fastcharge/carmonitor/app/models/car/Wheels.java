@@ -1,10 +1,10 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 public class Wheels {
-	private short lf_wheel_rpm;
-	private short rf_wheel_rpm;
-	private short lr_wheel_rpm;
-	private short rr_wheel_rpm;
+	private volatile short lf_wheel_rpm;
+	private volatile short rf_wheel_rpm;
+	private volatile short lr_wheel_rpm;
+	private volatile short rr_wheel_rpm;
 	
 	public Wheels() {}
 	
