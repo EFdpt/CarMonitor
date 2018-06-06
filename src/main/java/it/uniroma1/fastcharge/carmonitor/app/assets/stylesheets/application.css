@@ -1,5 +1,14 @@
+@font-face {
+	font-family: Arial;
+    src: url("../resources/fonts/comfortaa/Comfortaa-Regular.ttf");
+}
+
+.root {
+	-highlight-color: #ef7f02;
+}
+
 .jfx-decorator {
-    -fx-decorator-color: #ef7f02;
+    -fx-decorator-color: derive(-highlight-color, -80%);
 }
 
 .jfx-decorator .jfx-decorator-buttons-container {
@@ -10,3 +19,41 @@
     -fx-border-color: -fx-decorator-color;
     -fx-border-width: 0 4 4 4;
 }
+
+.menu-bar{
+	-fx-background-color: -fx-decorator-color;
+	-fx-border-width: 0;
+}
+
+.menu-bar .label {
+	-fx-font-size: 25 pt;
+	-fx-font-weight: bold;
+	-fx-font-family: "Comfortaa";
+	-fx-text-fill: derive(-highlight-color, 100%);
+	-fx-padding: 0.25em 1.5em 0.25em 1.5em;
+}
+
+.menu-item .label {
+	-fx-font-size: 25 pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: derive(-highlight-color, -60%);
+}
+
+.menu:hover,
+.menu:showing { /* selects Menu in MenuBar, if shown */
+    -fx-background-color: derive(-highlight-color, -60%);
+}
+
+.menu-item:hover,
+.menu-item:focused {
+	-fx-background-color: derive(-highlight-color, 107%);
+	-fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+}
+
+.context-menu {
+    -fx-background-color: derive(-highlight-color, 140%);
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0;
+}
+
+
