@@ -33,6 +33,7 @@ public class MainApp extends Application {
 		scene.getStylesheets().add(getClass().getResource("assets/stylesheets/application.css").toExternalForm());
 
 		this.primaryStage.setScene(scene);
+		this.primaryStage.setTitle("FastCharge CarMonitor");
 		this.primaryStage.setMaximized(true);
         this.primaryStage.show();
     }

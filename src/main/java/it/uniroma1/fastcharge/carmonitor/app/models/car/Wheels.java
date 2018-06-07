@@ -1,42 +1,60 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class Wheels {
-	private volatile short lf_wheel_rpm;
-	private volatile short rf_wheel_rpm;
-	private volatile short lr_wheel_rpm;
-	private volatile short rr_wheel_rpm;
+	private volatile short lfWheelRpm;
+	private volatile short rfWheelRpm;
+	private volatile short lrWheelRpm;
+	private volatile short rrWheelRpm;
+	private final PropertyChangeSupport propertySupport;
 	
-	public Wheels() {}
+	public Wheels() {
+		this.propertySupport = new PropertyChangeSupport(this);
+	}
 	
 	public short getLfWheelRpm() {
-		return lf_wheel_rpm;
+		return lfWheelRpm;
 	}
 	
 	public void setLfWheelRpm(short lfWheelRpm) {
-		this.lf_wheel_rpm = lfWheelRpm;
+		short oldLfWheelRpm = this.lfWheelRpm;
+		this.lfWheelRpm = lfWheelRpm;
+		propertySupport.firePropertyChange("lfWheelRpm", oldLfWheelRpm, lfWheelRpm);
 	}
 
 	public short getRfWheelRpm() {
-		return rf_wheel_rpm;
+		return rfWheelRpm;
 	}
 
 	public void setRfWheelRpm(short rfWheelRpm) {
-		this.rf_wheel_rpm = rfWheelRpm;
+		short oldRfWheelRpm = this.rfWheelRpm;
+		this.rfWheelRpm = rfWheelRpm;
+		propertySupport.firePropertyChange("rfWheelRpm", oldRfWheelRpm, rfWheelRpm);
 	}
 
 	public short getLrWheelRpm() {
-		return lr_wheel_rpm;
+		return lrWheelRpm;
 	}
 
 	public void setLrWheelRpm(short lrWheelRpm) {
-		this.lr_wheel_rpm = lrWheelRpm;
+		short oldLrWheelRpm = this.lrWheelRpm;
+		this.lrWheelRpm = lrWheelRpm;
+		propertySupport.firePropertyChange("lrWheelRpm", oldLrWheelRpm, lrWheelRpm);
 	}
 
 	public short getRrWheelRpm() {
-		return rr_wheel_rpm;
+		return rrWheelRpm;
 	}
 
 	public void setRrWheelRpm(short rrWheelRpm) {
-		this.rr_wheel_rpm = rrWheelRpm;
+		short oldRrWheelRpm = this.rrWheelRpm;
+		this.rrWheelRpm = rrWheelRpm;
+		propertySupport.firePropertyChange("rrWheelRpm", oldRrWheelRpm, rrWheelRpm);
 	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertySupport.addPropertyChangeListener(listener);
+    }
 }

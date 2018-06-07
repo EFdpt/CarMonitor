@@ -14,7 +14,7 @@ public class CarRadioAdapter implements ICarDeserializer {
 	private final static CarRadioAdapter adapter = new CarRadioAdapter();
 	private static Gson gson;
 	
-	static {
+	private CarRadioAdapter() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 	    gsonBuilder.registerTypeAdapter(Car.class, new CarRadioJsonDeserializer());
 	    gson = gsonBuilder.create();
@@ -26,7 +26,6 @@ public class CarRadioAdapter implements ICarDeserializer {
 	
 	@Override
 	public Car deserialize(ObjectInputStream in) throws IOException, ClassNotFoundException {
-		gson.fromJson((String) in.readObject(), Car.class);
-		return null;
+		return gson.fromJson((String) in.readObject(), Car.class);
 	}	
 }
