@@ -1,6 +1,7 @@
 package it.uniroma1.fastcharge.carmonitor.app;
 
 import it.uniroma1.fastcharge.carmonitor.app.controllers.MainController;
+import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +34,7 @@ public class MainApp extends Application {
 		scene.getStylesheets().add(getClass().getResource("assets/stylesheets/application.css").toExternalForm());
 
 		this.primaryStage.setScene(scene);
-		this.primaryStage.setTitle("FastCharge CarMonitor");
+		this.primaryStage.titleProperty().bind(I18N.createStringBinding("appTitle"));
 		this.primaryStage.setMaximized(true);
         this.primaryStage.show();
     }

@@ -1,11 +1,11 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.session;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
-import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
+import it.uniroma1.fastcharge.carmonitor.app.models.radio.ISerialRadio;
 
 public class Session {
 	private Car car;
-	private SerialRadio radio;
+	private ISerialRadio radio;
 	
 	// current session singleton (volatile for synchronized object reference)
 	private volatile static Session defaultSession = new Session();
@@ -20,11 +20,11 @@ public class Session {
 		this.car = car;
 	}
 
-	public SerialRadio getRadio() {
+	public ISerialRadio getRadio() {
 		return radio;
 	}
 
-	public void setRadio(SerialRadio radio) {
+	public void setRadio(ISerialRadio radio) {
 		this.radio = radio;
 	}
 	

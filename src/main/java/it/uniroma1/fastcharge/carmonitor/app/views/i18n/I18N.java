@@ -46,7 +46,7 @@ public final class I18N {
     }
     
     public static String get(final String key, final Object... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("st/telemetry/res/locales/LocaleMessages", locale.get());
+        ResourceBundle bundle = ResourceBundle.getBundle("it/uniroma1/fastcharge/carmonitor/config/locales/LocaleMessages", locale.get());
         return MessageFormat.format(bundle.getString(key), args);
     }
     

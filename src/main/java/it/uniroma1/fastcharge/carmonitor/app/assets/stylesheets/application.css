@@ -32,7 +32,7 @@
 }
 
 .menu-bar .label {
-	-fx-font-size: 25 pt;
+	-fx-font-size: 22 pt;
 	-fx-font-weight: bold;
 	-fx-text-fill: -highlight-color;
 	-fx-padding: 0.25em 1.5em 0.25em 1.5em;
@@ -53,11 +53,11 @@
 
 .menu-item-first {
 	-fx-border-color: -highlight-color;
-    -fx-border-width: 2 0 0 0;
+	-fx-border-width: 2 0 0 0;
 }
 
 .menu-item .label {
-	-fx-font-size: 25 pt;
+	-fx-font-size: 20 pt;
 	-fx-font-weight: bold;
 	-fx-text-fill: -highlight-color;
 }
