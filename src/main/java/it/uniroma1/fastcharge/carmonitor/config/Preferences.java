@@ -6,15 +6,18 @@ public class Preferences {
 	
 	private int DEFAULT_BAUDRATE = 9600;
 	private double DEFAULT_CHART_REFRESH_TIME = 0.5;
+	private String DEFAULT_LOG_DIR = "logs";
 	
 	private Locale locale;
 	private int baudRate;
 	private double chartRefreshTime;
+	private String logDir;
 	
 	public Preferences() {
 		locale = Locale.getDefault();
 		baudRate =  DEFAULT_BAUDRATE;
 		chartRefreshTime = DEFAULT_CHART_REFRESH_TIME;
+		logDir = DEFAULT_LOG_DIR;
 	}
 	
 	public Locale getLocale() {
@@ -43,5 +46,13 @@ public class Preferences {
 	
 	public void setChartRefreshTime(double chartRefreshTime) {
 		this.chartRefreshTime = chartRefreshTime;
+	}
+	
+	public String getLogDir() {
+		return this.logDir;
+	}
+	
+	public void setLogDir(String dir) {
+		this.logDir = dir;
 	}
 }

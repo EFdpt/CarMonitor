@@ -10,6 +10,7 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
+import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 
 public class SerialRadioDataListener implements SerialPortDataListener {
 
@@ -28,6 +29,7 @@ public class SerialRadioDataListener implements SerialPortDataListener {
 		// deserialize recvBuffer
 		try {
 			Car car = CarRadioAdapter.getAdapter().deserialize(new ObjectInputStream(new ByteArrayInputStream(recvBuffer)));
+			Session.getDefaultInstance().getOutputStream().writeObject(car);
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

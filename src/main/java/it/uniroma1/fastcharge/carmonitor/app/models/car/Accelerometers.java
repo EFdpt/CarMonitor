@@ -2,8 +2,10 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class Accelerometers {
+public class Accelerometers implements Serializable {
+	private static final long serialVersionUID = -4794710467001730614L;
 	
 	private volatile byte accelerometerX;
 	private volatile byte accelerometerY;

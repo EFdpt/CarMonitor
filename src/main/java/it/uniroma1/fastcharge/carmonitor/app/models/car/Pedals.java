@@ -2,8 +2,11 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class Pedals {
+public class Pedals implements Serializable {
+	private static final long serialVersionUID = -1610552689784668165L;
+	
 	private volatile byte tps1;
 	private volatile byte tps1Min;
 	private volatile byte tps1Max;

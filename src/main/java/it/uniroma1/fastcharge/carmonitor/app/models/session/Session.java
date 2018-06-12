@@ -1,16 +1,22 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.session;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
-import it.uniroma1.fastcharge.carmonitor.app.models.radio.ISerialRadio;
+import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 
 public class Session {
-	private Car car;
-	private ISerialRadio radio;
+	private volatile Car car;
+	private volatile SerialRadio radio;
+	private volatile ObjectOutputStream	out;
+	private volatile FileOutputStream	fileOut;
 	
 	// current session singleton (volatile for synchronized object reference)
 	private volatile static Session defaultSession = new Session();
 	
-	private Session() {}
+	private Session() {
+	}
 	
 	public Car getCar() {
 		return car;
@@ -20,12 +26,28 @@ public class Session {
 		this.car = car;
 	}
 
-	public ISerialRadio getRadio() {
+	public SerialRadio getRadio() {
 		return radio;
 	}
 
-	public void setRadio(ISerialRadio radio) {
+	public void setRadio(SerialRadio radio) {
 		this.radio = radio;
+	}
+	
+	public ObjectOutputStream getOutputStream() {
+		return this.out;
+	}
+	
+	public void setOutputStream(ObjectOutputStream out) {
+		this.out = out;
+	}
+	
+	public FileOutputStream getFileOutputStream() {
+		return this.fileOut;
+	}
+	
+	public void setFileOutputStream(FileOutputStream fileOut) {
+		this.fileOut = fileOut;
 	}
 	
 	// return a new Session instance

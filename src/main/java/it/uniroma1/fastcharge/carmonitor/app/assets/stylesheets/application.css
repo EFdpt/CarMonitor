@@ -51,6 +51,10 @@
 	-fx-background-color: derive(-theme-color, -20%);
 }
 
+.menu-item:disabled {
+	-fx-background-color: derive(-theme-color, -160%);
+}
+
 .menu-item-first {
 	-fx-border-color: -highlight-color;
 	-fx-border-width: 2 0 0 0;

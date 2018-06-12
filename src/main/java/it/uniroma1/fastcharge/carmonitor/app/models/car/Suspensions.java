@@ -2,8 +2,10 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class Suspensions {
+public class Suspensions implements Serializable {
+	private static final long serialVersionUID = 6294604389693562541L;
 	
 	private volatile byte lfSuspension;
 	private volatile byte rfSuspension;

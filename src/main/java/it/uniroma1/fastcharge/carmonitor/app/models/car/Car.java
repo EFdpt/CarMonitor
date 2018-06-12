@@ -1,13 +1,17 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
+	
+	private static final long serialVersionUID = 1816168786704121837L;
 	
 	private Pedals 			pedals;
 	private Wheels 			wheels;
 	private Accelerometers 	accelerometers;
 	private Suspensions 	suspensions;
 	
-	private Car() { 
+	public Car() { 
 		this.pedals = new Pedals();
 		this.wheels = new Wheels();
 		this.accelerometers = new Accelerometers();

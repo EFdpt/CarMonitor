@@ -2,8 +2,11 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 
-public class Wheels {
+public class Wheels implements Serializable {
+	private static final long serialVersionUID = -37627236686782662L;
+	
 	private volatile short lfWheelRpm;
 	private volatile short rfWheelRpm;
 	private volatile short lrWheelRpm;

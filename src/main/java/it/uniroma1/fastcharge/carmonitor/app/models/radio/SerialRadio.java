@@ -10,14 +10,13 @@ import java.util.stream.Collectors;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 
-public class SerialRadio implements ISerialRadio {
+public class SerialRadio {
 	
 	private SerialPort serialPort = null;
 	
 	private SerialRadio() {}
 
-	@Override
-	public List<ISerialRadio> getCommPorts() {
+	public static List<SerialRadio> getCommPorts() {
 		return Arrays.asList(SerialPort.getCommPorts()).stream()
 				.map(p -> {
 					SerialRadio radio = new SerialRadio();
@@ -27,7 +26,6 @@ public class SerialRadio implements ISerialRadio {
 				.collect(Collectors.toCollection(ArrayList::new)); 
 	}
 	
-	@Override
 	public String getPortDescription() {
 		if (serialPort == null)
 			return null;
@@ -35,14 +33,12 @@ public class SerialRadio implements ISerialRadio {
 	}
 	
 
-	@Override
 	public String getSystemPortName() {
 		if (serialPort == null)
 			return null;
 		return serialPort.getSystemPortName();
 	}
 	
-	@Override
 	public boolean setPort(String portDescriptor) {
 		if (serialPort == null)
 			return false;
@@ -53,62 +49,53 @@ public class SerialRadio implements ISerialRadio {
 		return true;
 	}
 
-	@Override
 	public int getBaudRate() {
 		if (serialPort == null)
 			return -1;
 		return serialPort.getBaudRate();
 	}
 
-	@Override
 	public void setBaudRate(int baudRate) {
 		if (serialPort == null)
 			return;
 	}
 
-	@Override
 	public boolean isOpen() {
 		if (serialPort == null)
 			return false;
 		return serialPort.isOpen();
 	}
 
-	@Override
 	public boolean open() {
 		if (serialPort == null)
 			return false;
 		return serialPort.openPort();
 	}
 
-	@Override
 	public boolean close() {
 		if (serialPort == null)
 			return false;
 		return serialPort.closePort();
 	}
 
-	@Override
 	public boolean addDataListener(EventListener listener) {
 		if (serialPort == null)
 			return false;
 		return serialPort.addDataListener((SerialPortDataListener) listener);
 	}
 
-	@Override
 	public InputStream getInputStream() {
 		if (serialPort == null)
 			return null;
 		return serialPort.getInputStream();
 	}
 
-	@Override
 	public int bytesAvailable() {
 		if (serialPort == null)
 			return -1;
 		return serialPort.bytesAvailable();
 	}
 
-	@Override
 	public int readBytes(byte[] buffer, long bytesToRead) {
 		if (serialPort == null)
 			return -1;
