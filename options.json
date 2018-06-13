@@ -1,6 +1,0 @@
-{
-  "locale": "en_EN",
-  "baudRate": 9600,
-  "chartRefreshTime": 0.1,
-  "logDir": "logs"
-}
