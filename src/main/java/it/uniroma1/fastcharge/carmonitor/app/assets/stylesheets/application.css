@@ -52,7 +52,7 @@
 }
 
 .menu-item:disabled {
-	-fx-background-color: derive(-theme-color, -160%);
+	-fx-opacity: 1.0 ;
 }
 
 .menu-item-first {

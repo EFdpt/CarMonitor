@@ -9,13 +9,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class ApplicationPreferences {
+	public final static String DEFAULT_PREFERENCES_FILE = "options.json";
+	
 	private static Preferences preferences = new Preferences(); // initialize default preferences
+	
+	static {
+		try {
+			loadPreferences(DEFAULT_PREFERENCES_FILE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static Preferences getConfiguration() {
 		return preferences;
 	}
 	
-	public static void loadConfiguration(String location) throws IOException {
+	public static void loadPreferences(String location) throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 		gsonBuilder.registerTypeAdapter(Preferences.class, new OptionsBeanAdapter());
 		Gson JSON = gsonBuilder.create();
@@ -23,7 +33,11 @@ public class ApplicationPreferences {
 		preferences = JSON.fromJson(file, Preferences.class);
 	}
 	
-	public static void saveConfiguration(String location) throws IOException {
+	public static void savePreferences() throws IOException {
+		savePreferences(DEFAULT_PREFERENCES_FILE);
+	}
+	
+	public static void savePreferences(String location) throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 		gsonBuilder.registerTypeAdapter(Preferences.class, new OptionsBeanAdapter());
 		Gson JSON = gsonBuilder.create();

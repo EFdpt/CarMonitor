@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.lang3.LocaleUtils;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
@@ -58,9 +60,12 @@ public final class I18N {
         return Bindings.createStringBinding(func, locale);
     }
     
-    public static Tooltip tooltipForKey(final String key, final Object... args) {
-        Tooltip tooltip = new Tooltip();
-        tooltip.textProperty().bind(createStringBinding(key, args));
-        return tooltip;
-    }
+    public static String localeToString(Locale l) {
+		String language = l.getDisplayLanguage();
+		return language.substring(0, 1).toUpperCase() + language.substring(1);
+	}
+
+	public static Locale stringToLocale(String localeString) {
+		return LocaleUtils.toLocale(localeString.substring(0, 1).toLowerCase() + localeString.substring(1));
+	}
 }

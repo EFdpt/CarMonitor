@@ -23,7 +23,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) throws Exception {
     	this.primaryStage = primaryStage;
     	
-    	MainController rootController = new MainController();
+    	MainController rootController = new MainController(primaryStage);
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/it/uniroma1/fastcharge/carmonitor/app/views/MainView.fxml"));
 		loader.setController(rootController);
 		this.rootLayout = loader.load();

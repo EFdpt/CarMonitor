@@ -29,7 +29,7 @@ public class RadioConnectTask implements Task {
 		Session.getDefaultInstance().getRadio().setBaudRate(ApplicationPreferences.getConfiguration().getBaudRate());
 		
 		try {
-			String fileName = ApplicationPreferences.getConfiguration().getLogDir() + new SimpleDateFormat("'/'yyyy-MM-dd HH_mm_SS").format(new Date());
+			String fileName = ApplicationPreferences.getConfiguration().getLogDir() + new SimpleDateFormat("'/'yyyy-MM-dd HH_mm_SS'.ser'").format(new Date());
 			System.out.println(fileName);
 			File f = new File(fileName);
 			f.getParentFile().mkdirs();

@@ -18,7 +18,7 @@ public class MainActivity implements Runnable {
 		executed = true;
 		
 		try {
-			ApplicationPreferences.loadConfiguration("options.json");
+			ApplicationPreferences.loadPreferences("options.json");
 		} catch (IOException e) {
 			// configurazione precedente non presente
 			e.printStackTrace();

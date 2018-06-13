@@ -16,32 +16,32 @@
         <menus>
           <Menu fx:id="fileMenu" mnemonicParsing="false">
             <items>
-              <Menu mnemonicParsing="false" text="Export" styleClass="menu-item-first">
+              <Menu fx:id="exportMenu" mnemonicParsing="false" styleClass="menu-item-first">
             	<items>
-              	  <MenuItem mnemonicParsing="false" styleClass="menu-item-first" text="Export csv"/>
-                  <MenuItem mnemonicParsing="false" text="Export previous session"/>
+              	  <MenuItem fx:id="exportCsvMenuItem" mnemonicParsing="false" styleClass="menu-item-first"/>
+                  <MenuItem fx:id="exportPrevMenuItem" mnemonicParsing="false"/>
                 </items>
               </Menu>
               <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" />
             </items>
           </Menu>
-          <Menu fx:id="radioMenu" mnemonicParsing="false" text="Radio">
+          <Menu fx:id="radioMenu" mnemonicParsing="false">
             <items>
-              <Menu fx:id="serialPortMenu" mnemonicParsing="false" text="Serial port" styleClass="menu-item-first">
+              <Menu fx:id="serialPortMenu" mnemonicParsing="false" styleClass="menu-item-first">
               	<items></items>
               </Menu>
-              <MenuItem fx:id="connectMenuItem" mnemonicParsing="false" text="Connect" />
-              <MenuItem mnemonicParsing="false" text="Disconnect" />
+              <MenuItem fx:id="connectMenuItem" mnemonicParsing="false"/>
+              <MenuItem fx:id="disconnectMenuItem" mnemonicParsing="false"/>
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Window">
+            <Menu fx:id="windowMenu" mnemonicParsing="false">
               <items>
-                <MenuItem mnemonicParsing="false" styleClass="menu-item-first" text="Preferences" />
+                <MenuItem fx:id="preferencesMenuItem" mnemonicParsing="false" styleClass="menu-item-first"/>
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu fx:id="helpMenu" mnemonicParsing="false">
             <items>
-              <MenuItem mnemonicParsing="false" styleClass="menu-item-first" text="About" />
+              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" styleClass="menu-item-first"/>
             </items>
           </Menu>
         </menus>
