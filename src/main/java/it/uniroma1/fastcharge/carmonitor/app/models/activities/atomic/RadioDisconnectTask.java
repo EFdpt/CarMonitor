@@ -5,12 +5,12 @@ import java.io.IOException;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.Task;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 
-public class RadioDisconnect implements Task {
+public class RadioDisconnectTask implements Task {
 
 	private volatile boolean executed = false;
 	private volatile Session currentSession;
 	
-	public RadioDisconnect() {
+	public RadioDisconnectTask() {
 		currentSession = Session.getDefaultInstance();
 	}
 	
@@ -20,6 +20,7 @@ public class RadioDisconnect implements Task {
 			return;
 		
 		try {
+			currentSession.getRadio().close();
 			currentSession.getOutputStream().close();
 			currentSession.getFileOutputStream().close();
 		} catch (IOException e) {

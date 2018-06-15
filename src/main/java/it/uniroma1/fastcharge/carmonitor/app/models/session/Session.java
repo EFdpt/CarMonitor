@@ -16,6 +16,8 @@ public class Session {
 	private volatile static Session defaultSession = new Session();
 	
 	private Session() {
+		car = new Car();
+		car.getPedals().setBrake((byte) 25); 
 	}
 	
 	public Car getCar() {

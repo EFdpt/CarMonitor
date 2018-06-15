@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.Task;
-import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 

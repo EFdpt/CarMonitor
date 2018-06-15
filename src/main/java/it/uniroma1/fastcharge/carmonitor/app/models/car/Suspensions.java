@@ -16,6 +16,22 @@ public class Suspensions implements Serializable {
 	public Suspensions() {
 		this.propertySupport = new PropertyChangeSupport(this);
 	}
+	
+	public static String lfSuspensionPropertyName() {
+		return "lfSuspension";
+	}
+	
+	public static String rfSuspensionPropertyName() {
+		return "rfSuspension";
+	}
+	
+	public static String lrSuspensionPropertyName() {
+		return "lrSuspension";
+	}
+	
+	public static String rrSuspensionPropertyName() {
+		return "rrSuspension";
+	}
 
 	public byte getLfSuspension() {
 		return lfSuspension;

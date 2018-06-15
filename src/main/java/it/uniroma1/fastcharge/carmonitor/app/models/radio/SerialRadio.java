@@ -3,18 +3,18 @@ package it.uniroma1.fastcharge.carmonitor.app.models.radio;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EventListener;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortDataListener;
 
 public class SerialRadio {
 	
 	private SerialPort serialPort = null;
 	
-	private SerialRadio() {}
+	private SerialRadio() {
+		serialPort.addDataListener(new SerialRadioDataListener());
+	}
 
 	public static List<SerialRadio> getCommPorts() {
 		return Arrays.asList(SerialPort.getCommPorts()).stream()
@@ -76,12 +76,6 @@ public class SerialRadio {
 		if (serialPort == null)
 			return false;
 		return serialPort.closePort();
-	}
-
-	public boolean addDataListener(EventListener listener) {
-		if (serialPort == null)
-			return false;
-		return serialPort.addDataListener((SerialPortDataListener) listener);
 	}
 
 	public InputStream getInputStream() {

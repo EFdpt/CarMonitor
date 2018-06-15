@@ -59,7 +59,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <JFXSlider fx:id="refreshTimeSlider" blockIncrement="0.1" majorTickUnit="0.15" max="5.0" min="0.1" minorTickCount="1" prefHeight="24.0" prefWidth="149.0" value="0.1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <JFXSlider fx:id="refreshTimeSlider" blockIncrement="0.2" majorTickUnit="0.2" max="5.0" min="0.2" minorTickCount="1" prefHeight="24.0" prefWidth="149.0" value="0.2" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -98,7 +98,15 @@
             </JFXButton>
             <Label fx:id="selectedDirLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="189.0" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="10.0" left="5.0" right="5.0" />
+                  <Insets bottom="4.0" left="5.0" right="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="chartTimeLabel" prefHeight="23.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
                </GridPane.margin>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" />

@@ -13,16 +13,14 @@ public class ApplicationPreferences {
 	
 	private static Preferences preferences = new Preferences(); // initialize default preferences
 	
-	static {
-		try {
-			loadPreferences(DEFAULT_PREFERENCES_FILE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	private ApplicationPreferences() {}
 	
 	public static Preferences getConfiguration() {
 		return preferences;
+	}
+	
+	public static void loadPreferences() throws IOException {
+		loadPreferences(DEFAULT_PREFERENCES_FILE);
 	}
 	
 	public static void loadPreferences(String location) throws IOException {

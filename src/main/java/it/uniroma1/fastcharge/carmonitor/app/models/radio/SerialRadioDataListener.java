@@ -2,7 +2,6 @@ package it.uniroma1.fastcharge.carmonitor.app.models.radio;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -26,12 +25,14 @@ public class SerialRadioDataListener implements SerialPortDataListener {
 		byte[] recvBuffer = new byte[event.getSerialPort().bytesAvailable()];
 		event.getSerialPort().readBytes(recvBuffer, recvBuffer.length);
 		
+		System.out.println(new String(recvBuffer));
+		
+		
 		// deserialize recvBuffer
 		try {
 			Car car = CarRadioAdapter.getAdapter().deserialize(new ObjectInputStream(new ByteArrayInputStream(recvBuffer)));
 			Session.getDefaultInstance().getOutputStream().writeObject(car);
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

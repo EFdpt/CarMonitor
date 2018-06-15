@@ -10,18 +10,18 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.LocaleUtils;
 
+import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.Tooltip;
 
 public final class I18N {
     /** the current selected Locale. */
     private static final ObjectProperty<Locale> locale;
     
     static {
-        locale = new SimpleObjectProperty<>(getDefaultLocale());
+        locale = new SimpleObjectProperty<>(ApplicationPreferences.getConfiguration().getLocale());
         locale.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
     }
 	

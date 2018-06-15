@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -25,6 +26,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import javafx.scene.layout.Pane;
 
 public class PreferencesController implements Initializable {
 	
@@ -33,7 +35,7 @@ public class PreferencesController implements Initializable {
 	private StringProperty logDirProperty;
 	
 	@FXML
-	private Label logDirLabel, selectedDirLabel, baudrateLabel, chartRefTimeLabel, languageLabel;
+	private Label logDirLabel, selectedDirLabel, baudrateLabel, chartRefTimeLabel, chartTimeLabel, languageLabel;
 	
 	@FXML
 	private TextField baudrateTextField;
@@ -58,9 +60,11 @@ public class PreferencesController implements Initializable {
 		logDirLabel.textProperty().bind(I18N.createStringBinding("Preferences.LogDirectory"));
 		baudrateLabel.textProperty().bind(I18N.createStringBinding("Preferences.BaudRate"));
 		chartRefTimeLabel.textProperty().bind(I18N.createStringBinding("Preferences.ChartTime"));
+		chartTimeLabel.textProperty().bind(Bindings.format("%.1f s", refreshTimeSlider.valueProperty()));
 		languageLabel.textProperty().bind(I18N.createStringBinding("Preferences.Language"));
 		applyButton.textProperty().bind(I18N.createStringBinding("Preferences.Apply"));
 		cancelButton.textProperty().bind(I18N.createStringBinding("Preferences.Cancel"));
+		chooseLogDirButton.textProperty().bind(I18N.createStringBinding("Preferences.Choose"));
 		
 		baudrateTextField.setText(Integer.toString(ApplicationPreferences.getConfiguration().getBaudRate()));
 		

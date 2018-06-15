@@ -17,6 +17,22 @@ public class Wheels implements Serializable {
 		this.propertySupport = new PropertyChangeSupport(this);
 	}
 	
+	public static String lfWheelPropertyName() {
+		return "lfWheelRpm";
+	}
+	
+	public static String rfWheelPropertyName() {
+		return "rfWheelRpm";
+	}
+	
+	public static String lrWheelPropertyName() {
+		return "lrWheelRpm";
+	}
+	
+	public static String rrWheelPropertyName() {
+		return "rrWheelRpm";
+	}
+	
 	public short getLfWheelRpm() {
 		return lfWheelRpm;
 	}

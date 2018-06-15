@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController">
+	<children>
+      <GridPane fx:id="imagePane" alignment="CENTER" HBox.hgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="70.0" valignment="BOTTOM" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" percentHeight="70.0" prefHeight="70.0" valignment="BOTTOM" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" />
+				<ImageView fx:id="carImageView" cache="true" cacheHint="QUALITY" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+					<image>
+						<Image url="@../../assets/resources/images/top.png" />
+					</image>
+				</ImageView>
+            <VBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <VBox prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="1" />
+            <VBox prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <children>
+                  <GridPane prefHeight="529.0" prefWidth="628.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints percentHeight="50.0" vgrow="ALWAYS" />
+                      <RowConstraints percentHeight="50.0" vgrow="ALWAYS" />
+                    </rowConstraints>
+                     <children>
+                        <VBox fx:id="wheelsPane" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <GridPane fx:id="wheelsGrid" VBox.vgrow="ALWAYS">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints percentHeight="16.0" vgrow="ALWAYS" />
+                                  <RowConstraints percentHeight="42.0" vgrow="ALWAYS" />
+                                  <RowConstraints percentHeight="42.0" vgrow="ALWAYS" />
+                                </rowConstraints>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="suspensionsPane" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                           <children>
+                              <GridPane fx:id="suspensionsGrid" VBox.vgrow="ALWAYS">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints percentHeight="16.0" vgrow="ALWAYS" />
+                                  <RowConstraints percentHeight="42.0" vgrow="ALWAYS" />
+                                  <RowConstraints percentHeight="42.0" vgrow="ALWAYS" />
+                                </rowConstraints>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children></VBox>
+            <VBox maxHeight="150.0" prefHeight="150.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+         </children>
+      </GridPane>
+	</children>
+</HBox>
