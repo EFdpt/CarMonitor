@@ -2,6 +2,10 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 public class Pedals implements Serializable {
@@ -22,10 +26,54 @@ public class Pedals implements Serializable {
 	private volatile boolean appsPlausibility;
 	private volatile boolean brakePlausibility;
 	
-	private final PropertyChangeSupport propertySupport;
+	private final transient PropertyChangeSupport propertySupport;
 	
 	public Pedals() {
 		this.propertySupport = new PropertyChangeSupport(this);
+	}
+	
+	public static String tps1PropertyName() {
+		return "tps1";
+	}
+	
+	public static String tps2PropertyName() {
+		return "tps2";
+	}
+	
+	public static String brakePropertyName() {
+		return "brake";
+	}
+	
+	public static String tps1MaxPropertyName() {
+		return "tps1Max";
+	}
+	
+	public static String tps1MinPropertyName() {
+		return "tps1Min";
+	}
+	
+	public static String tps2MaxPropertyName() {
+		return "tps2Max";
+	}
+	
+	public static String tps2MinPropertyName() {
+		return "tps2Min";
+	}
+	
+	public static String brakeMaxPropertyName() {
+		return "brakeMax";
+	}
+	
+	public static String brakeMinPropertyName() {
+		return "brakeMin";
+	}
+	
+	public static String appsPlausibilityPropertyName() {
+		return "appsPlausibility";
+	}
+	
+	public static String brakePlausibilityPropertyName() {
+		return "brakePlausibility";
 	}
 
 	public byte getTps1() {
@@ -135,4 +183,17 @@ public class Pedals implements Serializable {
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		
+	}
+	
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		
+	}
+	
+	private void readObjectNoData() throws ObjectStreamException {
+		throw new InvalidObjectException("Stream data required");
+	}
+
 }

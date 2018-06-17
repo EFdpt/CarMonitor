@@ -1,19 +1,25 @@
 package it.uniroma1.fastcharge.carmonitor.app.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXDecorator;
 
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.preferences.PreferencesController;
+import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.ExportCsvTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioConnectTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioDisconnectTask;
+import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.SetRadioTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
+import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,6 +30,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -69,13 +77,14 @@ public class MenuBarController implements Initializable {
 		});
 		
 		closeMenuItem.setOnAction(this::handleCloseWindow);
+		exportPrevMenuItem.setOnAction(this::exportCsvPreviousSession);
 	}
 	
 	public MenuBarController(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 	
-private void handleGetSerialPorts() {
+	private void handleGetSerialPorts() {
 		
 		// add serialPort menuItem if not already present
 		SerialRadio.getCommPorts().forEach((port) -> {
@@ -106,29 +115,24 @@ private void handleGetSerialPorts() {
 	
 	private void handleSetSerialPort(ActionEvent event) {
 		MenuItem i = (MenuItem) event.getSource();
-		SerialRadio radio = SerialRadio.getCommPorts().parallelStream()
+		SerialRadio radio = SerialRadio.getCommPorts().stream()
 						.filter(p -> p.getSystemPortName().equals(i.getText()))
 						.findFirst()
 						.orElse(null);
 		if (radio == null)
 			return;
-		if (Session.getDefaultInstance().getRadio() == null || !Session.getDefaultInstance().getRadio().isOpen()) {
-			Session.getDefaultInstance().setRadio(radio);
-			System.out.println("Serial port successfully setted");
-		}
+		
+		SetRadioTask task = new SetRadioTask(radio);
+		TaskExecutor.getInstance().perform(task);
 	}
 	
 	private void handleSerialRadioConnect(ActionEvent e) {
-		if (Session.getDefaultInstance().getRadio() == null || Session.getDefaultInstance().getRadio().isOpen())
-			return;
 		TaskExecutor.getInstance().perform(new RadioConnectTask());
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
-		if (Session.getDefaultInstance().getRadio() == null || !Session.getDefaultInstance().getRadio().isOpen())
-			return;
 		TaskExecutor.getInstance().perform(new RadioDisconnectTask());
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
@@ -180,5 +184,27 @@ private void handleGetSerialPorts() {
 	private void handleCloseWindow(ActionEvent event) {
 		primaryStage.close();
 	}
-
+	
+	private void exportCsvCurrentSession(ActionEvent event) {
+		
+	}
+	
+	private void exportCsvPreviousSession(ActionEvent event) {
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+		FileChooser logChooser = new FileChooser();
+		logChooser.setTitle("Open log file");
+        FileChooser csvChooser = new FileChooser();
+        csvChooser.setTitle("Choose csv file");
+        csvChooser.getExtensionFilters().add(extFilter);
+        File selectedFile = 
+                logChooser.showOpenDialog(primaryStage);
+        File csvFile = 
+                csvChooser.showSaveDialog(primaryStage);
+         
+        if (selectedFile != null && csvFile != null) {
+        	System.out.println("Exporting log to csv file...");
+        	ExportCsvTask export = new ExportCsvTask(selectedFile, csvFile);
+        	TaskExecutor.getInstance().perform(export);
+        }			
+	}
 }

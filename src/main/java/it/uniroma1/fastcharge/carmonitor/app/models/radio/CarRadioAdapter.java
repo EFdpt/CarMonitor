@@ -1,7 +1,6 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.radio;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.ICarDeserializer;
 
-public class CarRadioAdapter implements ICarDeserializer {
+class CarRadioAdapter implements ICarDeserializer {
 	
 	private final static CarRadioAdapter adapter = new CarRadioAdapter();
 	private static Gson gson;
@@ -25,7 +24,7 @@ public class CarRadioAdapter implements ICarDeserializer {
 	}
 	
 	@Override
-	public Car deserialize(ObjectInputStream in) throws IOException, ClassNotFoundException {
-		return gson.fromJson((String) in.readObject(), Car.class);
+	public Car deserialize(byte[] in) throws IOException, ClassNotFoundException {
+		return gson.fromJson(new String(in, "ASCII").replace("\r\n", ""), Car.class);
 	}	
 }

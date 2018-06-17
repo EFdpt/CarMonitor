@@ -12,15 +12,14 @@ public class SerialRadio {
 	
 	private SerialPort serialPort = null;
 	
-	private SerialRadio() {
-		serialPort.addDataListener(new SerialRadioDataListener());
-	}
+	private SerialRadio() {}
 
 	public static List<SerialRadio> getCommPorts() {
 		return Arrays.asList(SerialPort.getCommPorts()).stream()
 				.map(p -> {
 					SerialRadio radio = new SerialRadio();
 					radio.serialPort = p;
+					p.addDataListener(new SerialRadioDataListener());
 					return radio;
 				})
 				.collect(Collectors.toCollection(ArrayList::new)); 
@@ -38,16 +37,6 @@ public class SerialRadio {
 			return null;
 		return serialPort.getSystemPortName();
 	}
-	
-	public boolean setPort(String portDescriptor) {
-		if (serialPort == null)
-			return false;
-		SerialPort port = SerialPort.getCommPort(portDescriptor);
-		if (port.getPortDescription().equals("Bad Port"))
-			return false;
-		serialPort = port;
-		return true;
-	}
 
 	public int getBaudRate() {
 		if (serialPort == null)
@@ -56,8 +45,9 @@ public class SerialRadio {
 	}
 
 	public void setBaudRate(int baudRate) {
-		if (serialPort == null)
+		if (serialPort == null || serialPort.isOpen())
 			return;
+		serialPort.setBaudRate(baudRate);
 	}
 
 	public boolean isOpen() {

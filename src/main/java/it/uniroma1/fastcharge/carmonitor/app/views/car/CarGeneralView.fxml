@@ -23,17 +23,19 @@
           <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" />
-				<ImageView fx:id="carImageView" cache="true" cacheHint="QUALITY" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+				<ImageView fx:id="carImageView" cache="true" cacheHint="QUALITY" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
 					<image>
 						<Image url="@../../assets/resources/images/top.png" />
 					</image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
 				</ImageView>
             <VBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-            <VBox prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="1" />
-            <VBox prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <VBox GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" />
+            <VBox fx:id="dataPane" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <GridPane prefHeight="529.0" prefWidth="628.0">
+                  <GridPane>
                     <columnConstraints>
                       <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
@@ -42,12 +44,12 @@
                       <RowConstraints percentHeight="50.0" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                        <VBox fx:id="wheelsPane" prefHeight="200.0" prefWidth="100.0">
+                        <VBox fx:id="wheelsPane" >
                            <children>
-                              <GridPane fx:id="wheelsGrid" VBox.vgrow="ALWAYS">
+                              <GridPane fx:id="wheelsGrid" vgap="20.0" VBox.vgrow="ALWAYS">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
-                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                     <RowConstraints percentHeight="16.0" vgrow="ALWAYS" />
@@ -60,12 +62,12 @@
                               </GridPane>
                            </children>
                         </VBox>
-                        <VBox fx:id="suspensionsPane" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                        <VBox fx:id="suspensionsPane" GridPane.rowIndex="1">
                            <children>
-                              <GridPane fx:id="suspensionsGrid" VBox.vgrow="ALWAYS">
+                              <GridPane fx:id="suspensionsGrid" vgap="20.0" VBox.vgrow="ALWAYS">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
-                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
+                                  <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                     <RowConstraints percentHeight="16.0" vgrow="ALWAYS" />
@@ -80,8 +82,14 @@
                         </VBox>
                      </children>
                   </GridPane>
-               </children></VBox>
-            <VBox maxHeight="150.0" prefHeight="150.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding></VBox>
+            <VBox maxHeight="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
 	</children>

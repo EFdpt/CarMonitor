@@ -18,6 +18,7 @@ import eu.hansolo.medusa.TickLabelOrientation;
 import eu.hansolo.medusa.TickMarkType;
 import eu.hansolo.medusa.skins.ModernSkin;
 import eu.hansolo.medusa.skins.SlimSkin;
+import it.uniroma1.fastcharge.carmonitor.app.models.car.Pedals;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Suspensions;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Wheels;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
@@ -53,7 +54,7 @@ public class CarController implements Initializable {
 	private ImageView carImageView;
 	
 	@FXML
-	private VBox pedalsPane, wheelsPane, suspensionsPane, accelerometersPane;
+	private VBox pedalsPane, wheelsPane, suspensionsPane, accelerometersPane, dataPane;
 	
 	private Gauge lfWheelGauge, rfWheelGauge, lrWheelGauge, rrWheelGauge,
 			lfSuspensionGauge, rfSuspensionGauge, lrSuspensionGauge, rrSuspensionGauge;
@@ -61,6 +62,9 @@ public class CarController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		carImageView.fitHeightProperty().bind(imagePane.heightProperty().multiply(0.65));
+		imagePane.heightProperty().addListener((observable, oldValue, newValue) -> {
+			dataPane.setMaxHeight(imagePane.getHeight() * 0.65);
+		});
 		
 		@SuppressWarnings("rawtypes")
 		GaugeBuilder wheelsGaugeBuilder = GaugeBuilder.create()
@@ -135,9 +139,6 @@ public class CarController implements Initializable {
 		suspensionsGrid.add(rfSuspensionGauge, 1, 1);
 		suspensionsGrid.add(lrSuspensionGauge, 0, 2);
 		suspensionsGrid.add(rrSuspensionGauge, 1, 2);
-		
-		Session.getInstance();
-		bindView();
 	}
 	
 	public CarController(Stage primaryStage) {
@@ -148,8 +149,8 @@ public class CarController implements Initializable {
 	public void bindView() {
 		try {
 			ObjectProperty<Number> lfWheelProp = new JavaBeanObjectPropertyBuilder<Number>()
-				        .bean(Session.getDefaultInstance().getCar().getWheels())
-				        .name(Wheels.lfWheelPropertyName())
+				        .bean(Session.getDefaultInstance().getCar().getPedals())
+				        .name(Pedals.tps1PropertyName())
 				        .build();
 			lfWheelProp.addListener((obs, oldValue, newValue) -> {
 				lfWheelGauge.setValue(newValue.doubleValue());
@@ -205,16 +206,6 @@ public class CarController implements Initializable {
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
-		
-		Session.getDefaultInstance().getCar().getWheels().setLfWheelRpm((short) 2202);
-		Session.getDefaultInstance().getCar().getWheels().setRfWheelRpm((short) 2204);
-		Session.getDefaultInstance().getCar().getWheels().setLrWheelRpm((short) 2206);
-		Session.getDefaultInstance().getCar().getWheels().setRrWheelRpm((short) 2208);
-		
-		Session.getDefaultInstance().getCar().getSuspensions().setLfSuspension((byte) 22);
-		Session.getDefaultInstance().getCar().getSuspensions().setRfSuspension((byte) 27);
-		Session.getDefaultInstance().getCar().getSuspensions().setLrSuspension((byte) 21);
-		Session.getDefaultInstance().getCar().getSuspensions().setRrSuspension((byte) 29);
 	}
 	
 	public void unbindView() {

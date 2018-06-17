@@ -16,6 +16,18 @@ public class Accelerometers implements Serializable {
 		this.propertySupport = new PropertyChangeSupport(this);
 	}
 	
+	public static String accelerometerXPropertyName() {
+		return "accelerometerX";
+	}
+	
+	public static String accelerometerYPropertyName() {
+		return "accelerometerY";
+	}
+	
+	public static String accelerometerZPropertyName() {
+		return "accelerometerZ";
+	}
+	
 	public byte getAccelerometerX() {
 		return accelerometerX;
 	}

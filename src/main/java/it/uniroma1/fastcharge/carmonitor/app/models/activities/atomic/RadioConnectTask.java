@@ -23,15 +23,18 @@ public class RadioConnectTask implements Task {
 			return;
 		executed = true;
 		
+		if (Session.getDefaultInstance().getRadio() == null || Session.getDefaultInstance().getRadio().isOpen())
+			return;
+ 
 		Session.getDefaultInstance().getRadio().setBaudRate(ApplicationPreferences.getConfiguration().getBaudRate());
 		
 		try {
-			String fileName = ApplicationPreferences.getConfiguration().getLogDir() + new SimpleDateFormat("'/'yyyy-MM-dd HH_mm_SS'.ser'").format(new Date());
-			System.out.println(fileName);
+			String fileName = ApplicationPreferences.getConfiguration().getLogDir() + "/" + new SimpleDateFormat("yyyy-MM-dd HH_mm_SS").format(new Date()) + ".ser";
 			File f = new File(fileName);
+			System.out.println(fileName);
 			f.getParentFile().mkdirs();
 			f.createNewFile();
-	    	FileOutputStream fileOut = new FileOutputStream(f, false);
+	    	FileOutputStream fileOut = new FileOutputStream(f, true);
 	    	ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	    	Session.getDefaultInstance().setOutputStream(out);
 	    	Session.getDefaultInstance().setFileOutputStream(fileOut);
@@ -40,5 +43,10 @@ public class RadioConnectTask implements Task {
 	    }
 		
 		Session.getDefaultInstance().getRadio().open();
+	}
+	
+	@Override
+	public boolean isExecuted() {
+		return executed;
 	}
 }

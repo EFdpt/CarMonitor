@@ -11,7 +11,7 @@ public class Suspensions implements Serializable {
 	private volatile byte rfSuspension;
 	private volatile byte lrSuspension;
 	private volatile byte rrSuspension;
-	private final PropertyChangeSupport propertySupport;
+	private final transient PropertyChangeSupport propertySupport;
 	
 	public Suspensions() {
 		this.propertySupport = new PropertyChangeSupport(this);

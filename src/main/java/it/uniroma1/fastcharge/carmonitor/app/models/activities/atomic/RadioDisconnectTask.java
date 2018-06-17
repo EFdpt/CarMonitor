@@ -8,27 +8,28 @@ import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 public class RadioDisconnectTask implements Task {
 
 	private volatile boolean executed = false;
-	private volatile Session currentSession;
 	
-	public RadioDisconnectTask() {
-		currentSession = Session.getDefaultInstance();
-	}
+	public RadioDisconnectTask() {}
 	
 	@Override
 	public void execute() {
 		if (executed)
 			return;
 		
+		if (Session.getDefaultInstance().getRadio() == null || !Session.getDefaultInstance().getRadio().isOpen())
+			return;
+		
+		Session.getDefaultInstance().getRadio().close();
 		try {
-			currentSession.getRadio().close();
-			currentSession.getOutputStream().close();
-			currentSession.getFileOutputStream().close();
+			Session.getDefaultInstance().getFileOutputStream().close();
+			Session.getDefaultInstance().getOutputStream().close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public synchronized Session getCurrentSession() {
-		return currentSession;
+	@Override
+	public boolean isExecuted() {
+		return executed;
 	}
 }
