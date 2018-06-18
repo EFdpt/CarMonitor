@@ -4,42 +4,22 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import eu.hansolo.medusa.Gauge;
-import eu.hansolo.medusa.Gauge.KnobType;
-import eu.hansolo.medusa.Gauge.LedType;
-import eu.hansolo.medusa.Gauge.NeedleShape;
-import eu.hansolo.medusa.Gauge.NeedleSize;
-import eu.hansolo.medusa.Gauge.ScaleDirection;
-import eu.hansolo.medusa.Gauge.SkinType;
 import eu.hansolo.medusa.GaugeBuilder;
-import eu.hansolo.medusa.LcdDesign;
-import eu.hansolo.medusa.LcdFont;
-import eu.hansolo.medusa.TickLabelLocation;
-import eu.hansolo.medusa.TickLabelOrientation;
-import eu.hansolo.medusa.TickMarkType;
-import eu.hansolo.medusa.skins.ModernSkin;
-import eu.hansolo.medusa.skins.SlimSkin;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Pedals;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Suspensions;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Wheels;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.adapter.JavaBeanDoublePropertyBuilder;
 import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -149,8 +129,8 @@ public class CarController implements Initializable {
 	public void bindView() {
 		try {
 			ObjectProperty<Number> lfWheelProp = new JavaBeanObjectPropertyBuilder<Number>()
-				        .bean(Session.getDefaultInstance().getCar().getPedals())
-				        .name(Pedals.tps1PropertyName())
+				        .bean(Session.getDefaultInstance().getCar().getWheels())
+				        .name(Wheels.lfWheelPropertyName())
 				        .build();
 			lfWheelProp.addListener((obs, oldValue, newValue) -> {
 				lfWheelGauge.setValue(newValue.doubleValue());

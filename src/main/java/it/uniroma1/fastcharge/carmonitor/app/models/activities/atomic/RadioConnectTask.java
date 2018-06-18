@@ -31,7 +31,6 @@ public class RadioConnectTask implements Task {
 		try {
 			String fileName = ApplicationPreferences.getConfiguration().getLogDir() + "/" + new SimpleDateFormat("yyyy-MM-dd HH_mm_SS").format(new Date()) + ".ser";
 			File f = new File(fileName);
-			System.out.println(fileName);
 			f.getParentFile().mkdirs();
 			f.createNewFile();
 	    	FileOutputStream fileOut = new FileOutputStream(f, true);

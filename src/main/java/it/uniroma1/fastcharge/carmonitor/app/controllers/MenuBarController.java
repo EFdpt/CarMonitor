@@ -3,8 +3,6 @@ package it.uniroma1.fastcharge.carmonitor.app.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXDecorator;
@@ -17,9 +15,7 @@ import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioDisco
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.SetRadioTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
-import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
-import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,7 +26,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,15 +38,14 @@ public class MenuBarController implements Initializable {
 	private Menu fileMenu, exportMenu, radioMenu, serialPortMenu, windowMenu, helpMenu;
 	
 	@FXML
-	private MenuItem exportCsvMenuItem, exportPrevMenuItem, connectMenuItem, disconnectMenuItem, closeMenuItem, preferencesMenuItem, aboutMenuItem;
+	private MenuItem exportCsvMenuItem, connectMenuItem, disconnectMenuItem, closeMenuItem, preferencesMenuItem, aboutMenuItem;
 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fileMenu.textProperty().bind(I18N.createStringBinding("Menu.File"));
 		exportMenu.textProperty().bind(I18N.createStringBinding("Menu.File.Export"));
-		exportCsvMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Export.Csv"));
-		exportPrevMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Export.Prev"));
+		exportCsvMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Export.Prev"));
 		closeMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Close"));	
 		radioMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio"));
 		serialPortMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio.Port"));
@@ -62,6 +56,7 @@ public class MenuBarController implements Initializable {
 		helpMenu.textProperty().bind(I18N.createStringBinding("Menu.Help"));
 		aboutMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Help.About"));
 		
+		// bind actions
 		connectMenuItem.setOnAction(this::handleSerialRadioConnect);
 		disconnectMenuItem.setOnAction(this::handleSerialRadioDisconnect);
 		preferencesMenuItem.setOnAction(this::handleShowPreferences);
@@ -77,7 +72,7 @@ public class MenuBarController implements Initializable {
 		});
 		
 		closeMenuItem.setOnAction(this::handleCloseWindow);
-		exportPrevMenuItem.setOnAction(this::exportCsvPreviousSession);
+		exportCsvMenuItem.setOnAction(this::exportCsvPreviousSession);
 	}
 	
 	public MenuBarController(Stage primaryStage) {
@@ -185,10 +180,6 @@ public class MenuBarController implements Initializable {
 		primaryStage.close();
 	}
 	
-	private void exportCsvCurrentSession(ActionEvent event) {
-		
-	}
-	
 	private void exportCsvPreviousSession(ActionEvent event) {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser logChooser = new FileChooser();
@@ -205,6 +196,7 @@ public class MenuBarController implements Initializable {
         	System.out.println("Exporting log to csv file...");
         	ExportCsvTask export = new ExportCsvTask(selectedFile, csvFile);
         	TaskExecutor.getInstance().perform(export);
-        }			
+        	System.out.println("Export done!");
+        }
 	}
 }

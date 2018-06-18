@@ -2,10 +2,6 @@ package it.uniroma1.fastcharge.carmonitor.app.models.car;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 public class Pedals implements Serializable {
@@ -183,17 +179,4 @@ public class Pedals implements Serializable {
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
-	
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		
-	}
-	
-	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-		
-	}
-	
-	private void readObjectNoData() throws ObjectStreamException {
-		throw new InvalidObjectException("Stream data required");
-	}
-
 }

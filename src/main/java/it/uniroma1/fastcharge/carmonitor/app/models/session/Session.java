@@ -1,11 +1,8 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.session;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;

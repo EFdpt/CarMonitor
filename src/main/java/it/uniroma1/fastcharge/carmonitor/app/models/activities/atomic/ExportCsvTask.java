@@ -1,16 +1,12 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic;
 
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -54,7 +50,6 @@ public class ExportCsvTask implements Task {
 		try {
 			Car car;
 			while ((car = (Car) inputStream.readObject()) != null) {
-				System.out.println(car.getPedals().getTps1());
 				printer.printRecord(
 					car.getPedals().getTps1(), car.getPedals().getTps2(), car.getPedals().getBrake(),
 					car.getPedals().getAppsPlausibility(), car.getPedals().getBrakePlausibility(),
@@ -63,17 +58,21 @@ public class ExportCsvTask implements Task {
 					car.getAccelerometers().getAccelerometerX(), car.getAccelerometers().getAccelerometerZ()
 				);
 			}
+		} catch (EOFException e) {
+			
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		} finally {
 			// close all
 			try {
 				inputStream.close();
+				fileIn.close();
 				printer.close();
-				
+				writer.close();
+				fileWriter.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 	}
 

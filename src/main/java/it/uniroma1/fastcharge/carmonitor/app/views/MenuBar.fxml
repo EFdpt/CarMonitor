@@ -13,7 +13,6 @@
 					<items>
 						<MenuItem fx:id="exportCsvMenuItem" mnemonicParsing="false"
 							styleClass="menu-item-first" />
-						<MenuItem fx:id="exportPrevMenuItem" mnemonicParsing="false" />
 					</items>
 				</Menu>
 				<MenuItem fx:id="closeMenuItem" mnemonicParsing="false" />

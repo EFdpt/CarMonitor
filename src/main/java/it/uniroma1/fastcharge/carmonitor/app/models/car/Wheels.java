@@ -11,7 +11,7 @@ public class Wheels implements Serializable {
 	private volatile short rfWheelRpm;
 	private volatile short lrWheelRpm;
 	private volatile short rrWheelRpm;
-	private final PropertyChangeSupport propertySupport;
+	private final transient PropertyChangeSupport propertySupport;
 	
 	public Wheels() {
 		this.propertySupport = new PropertyChangeSupport(this);

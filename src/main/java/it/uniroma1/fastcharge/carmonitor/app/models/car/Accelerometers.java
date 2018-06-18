@@ -10,7 +10,7 @@ public class Accelerometers implements Serializable {
 	private volatile byte accelerometerX;
 	private volatile byte accelerometerY;
 	private volatile byte accelerometerZ;
-	private final PropertyChangeSupport propertySupport ;
+	private final transient PropertyChangeSupport propertySupport ;
 	
 	public Accelerometers() {
 		this.propertySupport = new PropertyChangeSupport(this);

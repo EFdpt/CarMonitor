@@ -25,6 +25,6 @@ class CarRadioAdapter implements ICarDeserializer {
 	
 	@Override
 	public Car deserialize(byte[] in) throws IOException, ClassNotFoundException {
-		return gson.fromJson(new String(in, "ASCII").replace("\r\n", ""), Car.class);
+		return gson.fromJson(new String(in), Car.class);
 	}	
 }
