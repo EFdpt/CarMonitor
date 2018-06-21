@@ -16,6 +16,7 @@ import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.SetRadioTa
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
+import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -184,6 +185,7 @@ public class MenuBarController implements Initializable {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser logChooser = new FileChooser();
 		logChooser.setTitle("Open log file");
+		logChooser.setInitialDirectory(new File(ApplicationPreferences.getConfiguration().getLogDir()));
         FileChooser csvChooser = new FileChooser();
         csvChooser.setTitle("Choose csv file");
         csvChooser.getExtensionFilters().add(extFilter);
