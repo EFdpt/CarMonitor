@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXDecorator;
 
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
+import it.uniroma1.fastcharge.carmonitor.app.controllers.aboutus.AboutUsController;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.preferences.PreferencesController;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.ExportCsvTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioConnectTask;
@@ -40,7 +41,7 @@ public class MenuBarController implements Initializable {
 	private Menu fileMenu, exportMenu, radioMenu, serialPortMenu, windowMenu, helpMenu;
 	
 	@FXML
-	private MenuItem exportCsvMenuItem, connectMenuItem, disconnectMenuItem, closeMenuItem, preferencesMenuItem, aboutMenuItem;
+	private MenuItem exportCsvMenuItem, connectMenuItem, disconnectMenuItem, closeMenuItem, newWindowMenuItem, preferencesMenuItem, aboutMenuItem;
 
 
 	@Override
@@ -54,6 +55,7 @@ public class MenuBarController implements Initializable {
 		connectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Connect"));
 		disconnectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Disconnect"));
 		windowMenu.textProperty().bind(I18N.createStringBinding("Menu.Window"));
+		newWindowMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Window.New"));
 		preferencesMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Window.Preferences"));
 		helpMenu.textProperty().bind(I18N.createStringBinding("Menu.Help"));
 		aboutMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Help.About"));
@@ -61,6 +63,7 @@ public class MenuBarController implements Initializable {
 		// bind actions
 		connectMenuItem.setOnAction(this::handleSerialRadioConnect);
 		disconnectMenuItem.setOnAction(this::handleSerialRadioDisconnect);
+		newWindowMenuItem.setOnAction(this::handleNewWindow);
 		preferencesMenuItem.setOnAction(this::handleShowPreferences);
 		radioMenu.showingProperty().addListener(new ChangeListener<Boolean>() {
 		    @Override
@@ -75,11 +78,87 @@ public class MenuBarController implements Initializable {
 		
 		closeMenuItem.setOnAction(this::handleCloseWindow);
 		exportCsvMenuItem.setOnAction(this::exportCsvPreviousSession);
+		aboutMenuItem.setOnAction(this::handleShowAboutUs);
 	}
 	
 	public MenuBarController(MainController controller, Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.rootController = controller;
+	}
+	
+	public void handleNewWindow(ActionEvent event) {
+		Parent root;
+		Scene scene;
+		
+		Stage stage = new Stage();
+		stage.titleProperty().bind(I18N.createStringBinding("Preferences.StageTitle"));
+		stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue)
+                stage.setMaximized(false);
+        });
+		
+        try {
+        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage);
+        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/preferences/PreferencesView.fxml"));
+    		loader.setController(preferencesController);
+    		root = loader.load();
+        	
+            JFXDecorator decorator = new JFXDecorator(stage, root);
+            
+            scene = new Scene(decorator, 400, 600);
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/preferences.css").toExternalForm());
+            stage.setScene(scene);
+            
+            stage.setResizable(false);
+            
+            stage.centerOnScreen();
+            stage.setOnHidden(e -> preferencesController.shutdown());
+
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	private void handleShowAboutUs(ActionEvent event) {
+		Parent root;
+		Scene scene;
+		
+		Stage stage = new Stage();
+		stage.titleProperty().bind(I18N.createStringBinding("AboutUs.StageTitle"));
+		stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue)
+                stage.setMaximized(false);
+        });
+		
+        try {
+        	AboutUsController aboutUsController = new AboutUsController(primaryStage, stage);
+        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/aboutus/AboutUsView.fxml"));
+    		loader.setController(aboutUsController);
+    		root = loader.load();
+        	
+            JFXDecorator decorator = new JFXDecorator(stage, root);
+            
+            scene = new Scene(decorator, 400, 300);
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/aboutus/aboutus.css").toExternalForm());
+            stage.setScene(scene);
+            
+            stage.setResizable(false);
+            
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(primaryStage);
+            
+            stage.centerOnScreen();
+            stage.setOnHidden(e -> aboutUsController.shutdown());
+
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void handleGetSerialPorts() {

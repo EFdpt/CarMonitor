@@ -30,8 +30,9 @@
 		</Menu>
 		<Menu fx:id="windowMenu" mnemonicParsing="false">
 			<items>
-				<MenuItem fx:id="preferencesMenuItem" mnemonicParsing="false"
+				<MenuItem fx:id="newWindowMenuItem" mnemonicParsing="false"
 					styleClass="menu-item-first" />
+				<MenuItem fx:id="preferencesMenuItem" mnemonicParsing="false" />
 			</items>
 		</Menu>
 		<Menu fx:id="helpMenu" mnemonicParsing="false">
