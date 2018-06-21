@@ -32,7 +32,7 @@
                </GridPane.margin>
 				</ImageView>
             <VBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-            <VBox GridPane.hgrow="ALWAYS" GridPane.columnIndex="1" />
+            <VBox GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
             <VBox fx:id="dataPane" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
                   <GridPane>
@@ -44,7 +44,7 @@
                       <RowConstraints percentHeight="50.0" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                        <VBox fx:id="wheelsPane" >
+                        <VBox fx:id="wheelsPane">
                            <children>
                               <GridPane fx:id="wheelsGrid" vgap="20.0" VBox.vgrow="ALWAYS">
                                 <columnConstraints>
@@ -89,7 +89,21 @@
                <padding>
                   <Insets left="20.0" />
                </padding></VBox>
-            <VBox maxHeight="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+            <VBox maxHeight="150.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+               <children>
+                  <GridPane fx:id="accelerometersGrid" vgap="20.0" VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
+                      <ColumnConstraints hgrow="ALWAYS" percentWidth="20.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </GridPane>
+               </children></VBox>
          </children>
       </GridPane>
 	</children>

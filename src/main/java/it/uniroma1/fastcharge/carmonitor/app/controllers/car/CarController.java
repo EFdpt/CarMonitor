@@ -28,7 +28,7 @@ public class CarController implements Initializable {
 	private Stage primaryStage;
 	
 	@FXML
-	private GridPane imagePane, wheelsGrid, suspensionsGrid;
+	private GridPane imagePane, wheelsGrid, suspensionsGrid, accelerometersGrid;
 	
 	@FXML
 	private ImageView carImageView;
@@ -37,7 +37,8 @@ public class CarController implements Initializable {
 	private VBox pedalsPane, wheelsPane, suspensionsPane, accelerometersPane, dataPane;
 	
 	private Gauge lfWheelGauge, rfWheelGauge, lrWheelGauge, rrWheelGauge,
-			lfSuspensionGauge, rfSuspensionGauge, lrSuspensionGauge, rrSuspensionGauge;
+			lfSuspensionGauge, rfSuspensionGauge, lrSuspensionGauge, rrSuspensionGauge,
+			accelerometerXGauge, accelerometerZGauge;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -119,14 +120,48 @@ public class CarController implements Initializable {
 		suspensionsGrid.add(rfSuspensionGauge, 1, 1);
 		suspensionsGrid.add(lrSuspensionGauge, 0, 2);
 		suspensionsGrid.add(rrSuspensionGauge, 1, 2);
+		
+		// ACCELEROMETERS
+		@SuppressWarnings("rawtypes")
+		GaugeBuilder accelerometersGaugeBuilder = GaugeBuilder.create()
+													.skinType(Gauge.SkinType.SLIM)
+													.barColor(Color.rgb(239, 127, 2))
+													.barBackgroundColor(Color.rgb(105, 105, 105, 0.2))
+													.animated(true)
+													.decimals(0)
+													.maxValue(5)
+													.unit("m");
+
+		accelerometerXGauge = accelerometersGaugeBuilder.build();
+		accelerometerZGauge = accelerometersGaugeBuilder.build();
+
+		Rectangle accelerometersBar = new Rectangle(600, 3);
+		accelerometersBar.setArcWidth(6);
+		accelerometersBar.setArcHeight(6);
+		accelerometersBar.setFill(Color.rgb(239, 127, 2));
+
+		Label accelerometersLabel = new Label("ACCELEROMETERS");
+		accelerometersLabel.setTextFill(Color.rgb(239, 127, 2));
+		accelerometersLabel.setAlignment(Pos.CENTER);
+		accelerometersLabel.setPadding(new Insets(0, 0, 10, 0));
+
+		VBox accelerometersVBox = new VBox(accelerometersBar, accelerometersLabel);
+		accelerometersVBox.setSpacing(3);
+		suspensionsVBox.setAlignment(Pos.CENTER);
+		accelerometersGrid.add(accelerometersVBox, 0, 0);
+		GridPane.setColumnSpan(accelerometersVBox, 2);
+
+		accelerometersGrid.add(accelerometerXGauge, 0, 1);
+		accelerometersGrid.add(accelerometerZGauge, 1, 1);
 	}
 	
 	public CarController(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void bindView() {
+	//@SuppressWarnings("unchecked")
+	public void updateView() {
+		/*
 		try {
 			ObjectProperty<Number> lfWheelProp = new JavaBeanObjectPropertyBuilder<Number>()
 				        .bean(Session.getDefaultInstance().getCar().getWheels())
@@ -185,7 +220,19 @@ public class CarController implements Initializable {
 			});
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
-		}
+		}*/
+		lfWheelGauge.setValue(Session.getDefaultInstance().getCar().getWheels().getLfWheelRpm());
+		rfWheelGauge.setValue(Session.getDefaultInstance().getCar().getWheels().getRfWheelRpm());
+		lrWheelGauge.setValue(Session.getDefaultInstance().getCar().getWheels().getLrWheelRpm());
+		rrWheelGauge.setValue(Session.getDefaultInstance().getCar().getWheels().getRrWheelRpm());
+		
+		lfSuspensionGauge.setValue(Session.getDefaultInstance().getCar().getSuspensions().getLfSuspension());
+		rfSuspensionGauge.setValue(Session.getDefaultInstance().getCar().getSuspensions().getRfSuspension());
+		lrSuspensionGauge.setValue(Session.getDefaultInstance().getCar().getSuspensions().getLrSuspension());
+		rrSuspensionGauge.setValue(Session.getDefaultInstance().getCar().getSuspensions().getRrSuspension());
+		
+		accelerometerXGauge.setValue(Session.getDefaultInstance().getCar().getAccelerometers().getAccelerometerX());
+		accelerometerZGauge.setValue(Session.getDefaultInstance().getCar().getAccelerometers().getAccelerometerZ());
 	}
 	
 	public void unbindView() {

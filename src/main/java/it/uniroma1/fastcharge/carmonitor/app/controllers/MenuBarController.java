@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 public class MenuBarController implements Initializable {
 	
 	private Stage primaryStage;
+	private MainController rootController;
 	
 	@FXML
 	private Menu fileMenu, exportMenu, radioMenu, serialPortMenu, windowMenu, helpMenu;
@@ -76,8 +77,9 @@ public class MenuBarController implements Initializable {
 		exportCsvMenuItem.setOnAction(this::exportCsvPreviousSession);
 	}
 	
-	public MenuBarController(Stage primaryStage) {
+	public MenuBarController(MainController controller, Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		this.rootController = controller;
 	}
 	
 	private void handleGetSerialPorts() {
@@ -126,12 +128,14 @@ public class MenuBarController implements Initializable {
 		TaskExecutor.getInstance().perform(new RadioConnectTask());
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
+		rootController.connectView();
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
 		TaskExecutor.getInstance().perform(new RadioDisconnectTask());
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
+		rootController.disconnectView();
 	}
 	
 	private void handleShowPreferences(ActionEvent event) {
