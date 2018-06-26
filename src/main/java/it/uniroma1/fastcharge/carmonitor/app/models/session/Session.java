@@ -1,13 +1,17 @@
 package it.uniroma1.fastcharge.carmonitor.app.models.session;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 
 public class Session {
+	private volatile static Log logger = LogFactory.getLog(Session.class);
+	
 	private volatile Car car;
 	private volatile SerialRadio radio;
 	private volatile ObjectOutputStream	out;

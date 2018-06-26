@@ -2,13 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141">
+<BorderPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -19,8 +20,7 @@
           <RowConstraints percentHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Label fx:id="aboutUsTextLabel" prefHeight="451.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"
-            	styleClass="aboutus-text">
+            <Label fx:id="aboutUsTextLabel" prefHeight="451.0" prefWidth="200.0" styleClass="aboutus-text" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -28,6 +28,11 @@
                   <Insets left="5.0" right="30.0" />
                </padding>
             </Label>
+            <ImageView fitHeight="295.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+               <image>
+                  <Image url="@../../assets/resources/images/finger.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </center>
