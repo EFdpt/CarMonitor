@@ -7,7 +7,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
- from {
+ 	from {
         (configurations.runtime).collect {
             it.isDirectory() ? it : zipTree(it)
         }
@@ -23,6 +23,7 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'com.google.guava:guava:23.0'
 	implementation 'com.google.code.gson:gson:2.8.4'
 	

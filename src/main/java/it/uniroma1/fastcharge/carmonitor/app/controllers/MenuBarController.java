@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXDecorator;
 
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.aboutus.AboutUsController;
+import it.uniroma1.fastcharge.carmonitor.app.controllers.car.chart.CarChartController;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.preferences.PreferencesController;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.ExportCsvTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioConnectTask;
@@ -88,32 +89,30 @@ public class MenuBarController implements Initializable {
 	
 	public void handleNewWindow(ActionEvent event) {
 		Parent root;
-		Scene scene;
-		
 		Stage stage = new Stage();
-		stage.titleProperty().bind(I18N.createStringBinding("Preferences.StageTitle"));
+		
+		stage.titleProperty().bind(I18N.createStringBinding("ChartView.StageTitle"));
 		stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue)
-                stage.setMaximized(false);
+                stage.setMaximized(true);
         });
 		
         try {
-        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage);
-        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/preferences/PreferencesView.fxml"));
-    		loader.setController(preferencesController);
-    		root = loader.load();
+        	CarChartController carChartController = new CarChartController(stage);
+        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/car/chart/ChartView.fxml"));
+        	loader.setController(carChartController);
+        	root = loader.load();
         	
             JFXDecorator decorator = new JFXDecorator(stage, root);
             
-            scene = new Scene(decorator, 400, 600);
+            Scene scene = new Scene(decorator, 400, 300);
             scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
-            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/preferences.css").toExternalForm());
             stage.setScene(scene);
             
             stage.setResizable(false);
+            stage.setMaximized(true);
             
             stage.centerOnScreen();
-            stage.setOnHidden(e -> preferencesController.shutdown());
 
             stage.show();
         }

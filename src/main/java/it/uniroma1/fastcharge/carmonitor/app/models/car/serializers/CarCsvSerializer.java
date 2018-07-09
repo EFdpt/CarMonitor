@@ -13,7 +13,6 @@ public class CarCsvSerializer implements ICarSerializer {
 
 	@Override
 	public ObjectOutputStream serialize(Car car) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

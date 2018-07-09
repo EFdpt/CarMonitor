@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController;
+import it.uniroma1.fastcharge.carmonitor.app.controllers.car.chart.CarChartController;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.LoadPreferencesTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import javafx.animation.KeyFrame;
