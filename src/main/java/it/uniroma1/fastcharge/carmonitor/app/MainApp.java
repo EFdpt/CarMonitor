@@ -49,7 +49,7 @@ public class MainApp extends Application {
 
 		this.primaryStage.setScene(scene);
 		this.primaryStage.titleProperty().bind(I18N.createStringBinding("appTitle"));
-		//this.primaryStage.setMaximized(true);
+		this.primaryStage.setMaximized(true);
 		
         this.primaryStage.show();
     }

@@ -2,38 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="300.0" maxWidth="400.0" minHeight="300.0" minWidth="400.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
-          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints percentHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="aboutUsTextLabel" prefHeight="451.0" prefWidth="200.0" styleClass="aboutus-text" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-               <GridPane.margin>
-                  <Insets right="5.0" />
-               </GridPane.margin>
-               <padding>
-                  <Insets left="5.0" right="30.0" />
-               </padding>
-            </Label>
-            <ImageView fitHeight="295.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="-15.0" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-               <image>
-                  <Image url="@../../assets/resources/images/finger.png" />
-               </image>
-            </ImageView>
-         </children>
-      </GridPane>
+      <Label fx:id="aboutUsTextLabel" styleClass="aboutus-text" wrapText="true" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </Label>
    </center>
 </BorderPane>
