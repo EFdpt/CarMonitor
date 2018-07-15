@@ -1,0 +1,9 @@
+.root {
+	-fx-background-color: white;
+}
+
+.aboutus-text {
+	-fx-text-fill: -highlight-color;
+	-fx-font-size: 22 pt;
+	-fx-font-weight: bold;
+}

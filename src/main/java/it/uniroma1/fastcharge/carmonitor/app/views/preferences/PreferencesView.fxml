@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+		<GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" />
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" />
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" />
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" />
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" />
+         </rowConstraints>
+         <columnConstraints>
+            <ColumnConstraints minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+         </columnConstraints>
+         <children>
+            <Label fx:id="logDirLabel" alignment="CENTER_RIGHT" prefHeight="99.0" prefWidth="130.0" textAlignment="RIGHT" wrapText="true" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="baudrateLabel" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="140.0" textAlignment="RIGHT" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="chartRefTimeLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="106.0" prefWidth="140.0" textAlignment="RIGHT" textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="languageLabel" alignment="CENTER_RIGHT" prefHeight="86.0" prefWidth="140.0" textAlignment="RIGHT" wrapText="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Label>
+            <JFXSlider fx:id="refreshTimeSlider" blockIncrement="0.2" majorTickUnit="0.2" max="5.0" min="0.2" minorTickCount="1" prefHeight="24.0" prefWidth="149.0" value="0.2" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </JFXSlider>
+            <JFXButton fx:id="applyButton" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="165.0" styleClass="button-highlight" text="Apply" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="5.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="cancelButton" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="5.0" right="20.0" />
+               </GridPane.margin></JFXButton>
+            <JFXTextField fx:id="baudrateTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <JFXComboBox fx:id="languageComboBox" prefHeight="28.0" prefWidth="153.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXComboBox>
+            <JFXButton fx:id="chooseLogDirButton" prefHeight="30.0" prefWidth="281.0" styleClass="button-highlight" text="Choose" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <Label fx:id="selectedDirLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="189.0" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="4.0" left="5.0" right="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="chartTimeLabel" prefHeight="23.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>
