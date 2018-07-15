@@ -109,7 +109,7 @@ public class MenuBarController implements Initializable {
             scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
             stage.setScene(scene);
             
-            stage.setResizable(false);
+            stage.setResizable(true);
             stage.setMaximized(true);
             
             stage.centerOnScreen();

@@ -189,7 +189,7 @@ public class CarChartController implements Initializable {
                     		return c.getWheels().getLfWheelRpm();
                     	});
                     } else if (carTreeView.getSelectionModel().getSelectedItem().equals(wheelFR)) {
-                    	showProperty("Vehicle.Wheels.FR", wheelFLSeries, (c) -> {
+                    	showProperty("Vehicle.Wheels.FR", wheelFRSeries, (c) -> {
                     		return c.getWheels().getRfWheelRpm();
                     	});
                     } else if (carTreeView.getSelectionModel().getSelectedItem().equals(wheelRL)) {
