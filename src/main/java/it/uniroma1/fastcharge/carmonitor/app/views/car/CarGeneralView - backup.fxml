@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints percentHeight="40.0" valignment="BOTTOM" vgrow="ALWAYS" />
+          <RowConstraints percentHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints percentHeight="20.0" valignment="TOP" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <VBox style="-fx-background-color: red;" fx:id="wheelsBox" alignment="BOTTOM_LEFT" spacing="3.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+               <GridPane.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </GridPane.margin>
+               <children>
+                  <Rectangle arcHeight="6.0" arcWidth="6.0" fill="#ef7f02" height="3.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="100.0" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="wheelsLabel" style="-fx-text-fill: #ef7f02;" />
+                  <GridPane fx:id="wheelsPane">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                    </rowConstraints>
+                  </GridPane>
+               </children></VBox>
+            <VBox fx:id="suspensionsBox" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </GridPane.margin></VBox>
+            <VBox fx:id="pedalsBox" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox fx:id="accelerometersBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin></VBox>
+            <ImageView fitHeight="370.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../assets/resources/images/top.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets left="50.0" right="50.0" />
+         </padding>
+      </GridPane>
+   </children>
+</AnchorPane>

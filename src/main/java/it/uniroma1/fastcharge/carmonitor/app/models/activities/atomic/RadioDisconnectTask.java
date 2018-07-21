@@ -8,6 +8,7 @@ import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 public class RadioDisconnectTask implements Task {
 
 	private volatile boolean executed = false;
+	private volatile boolean isDisconnected = false;
 	
 	public RadioDisconnectTask() {}
 	
@@ -19,7 +20,7 @@ public class RadioDisconnectTask implements Task {
 		if (Session.getDefaultInstance().getRadio() == null || !Session.getDefaultInstance().getRadio().isOpen())
 			return;
 		
-		Session.getDefaultInstance().getRadio().close();
+		isDisconnected = Session.getDefaultInstance().getRadio().close();
 		try {
 			Session.getDefaultInstance().getOutputStream().close();
 			Session.getDefaultInstance().getFileOutputStream().close();
@@ -31,5 +32,9 @@ public class RadioDisconnectTask implements Task {
 	@Override
 	public boolean isExecuted() {
 		return executed;
+	}
+	
+	public boolean isDisconnected() {
+		return isDisconnected;
 	}
 }

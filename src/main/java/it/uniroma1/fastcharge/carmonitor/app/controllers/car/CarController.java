@@ -5,21 +5,13 @@ import java.util.ResourceBundle;
 
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
-import it.uniroma1.fastcharge.carmonitor.app.models.car.Pedals;
-import it.uniroma1.fastcharge.carmonitor.app.models.car.Suspensions;
-import it.uniroma1.fastcharge.carmonitor.app.models.car.Wheels;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -27,65 +19,52 @@ import javafx.stage.Stage;
 public class CarController implements Initializable {
 	
 	private Stage primaryStage;
-	/*
-	@FXML
-	private GridPane imagePane, pedalsGrid, wheelsGrid, suspensionsGrid, accelerometersGrid;
-	*/
 	
 	@FXML
-	private ImageView carImageView;
+	private GridPane pedalsPane, wheelsPane, suspensionsPane, accelerometersPane;
 	
 	@FXML
-	private VBox pedalsBox, wheelsBox, suspensionsBox, accelerometersBox/*, dataPane*/;
+	private Label pedalsLabel, wheelsLabel, suspensionsLabel, accelerometersLabel;
 	
-	private Gauge appsGauge, brakeGauge, lfWheelGauge, rfWheelGauge, lrWheelGauge, rrWheelGauge,
+	//@FXML
+	//private ImageView carImageView;
+	
+	@FXML
+	private Rectangle pedalsRectangle, wheelsRectangle, suspensionsRectangle, accelerometersRectangle;
+	
+	@FXML
+	private Gauge acceleratorGauge;
+	
+	private Gauge brakeGauge, lfWheelGauge, rfWheelGauge, lrWheelGauge, rrWheelGauge,
 			lfSuspensionGauge, rfSuspensionGauge, lrSuspensionGauge, rrSuspensionGauge,
 			accelerometerXGauge, accelerometerZGauge;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		/*carImageView.fitHeightProperty().bind(imagePane.heightProperty().multiply(0.65));
-		imagePane.heightProperty().addListener((observable, oldValue, newValue) -> {
-			dataPane.setMaxHeight(imagePane.getHeight() * 0.65);
-		});*/
-		
+	public void initialize(URL location, ResourceBundle resources) {		
 		
 		@SuppressWarnings("rawtypes")
-		GaugeBuilder appsGaugeBuilder = GaugeBuilder.create()
+		GaugeBuilder pedalsGaugeBuilder = GaugeBuilder.create()
 											.skinType(Gauge.SkinType.SLIM)
-											.barColor(Color.rgb(239, 127, 2))
 											.barBackgroundColor(Color.rgb(105, 105, 105, 0.2))
 											.animated(true)
 											.decimals(0)
 											.maxValue(100)
 											.unit("%");
 		
-		appsGauge = appsGaugeBuilder.build();
-		appsGauge.setBarColor(Color.GREEN);
-		// appsGauge.setTitle("acc");//.titleProperty().bind(I18N.createStringBinding("Vehicle.Pedals.APPS"));
+		acceleratorGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Pedals.APPS"));
+		acceleratorGauge.setBarBackgroundColor(Color.rgb(105, 105, 105, 0.2));
+		acceleratorGauge.setBarColor(Color.GREEN);
+		acceleratorGauge.setDecimals(0);
 		
-		brakeGauge = appsGaugeBuilder.build();
+		brakeGauge = pedalsGaugeBuilder.build();
 		brakeGauge.setBarColor(Color.RED);
 		// brakeGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Pedals.Brake"));
 		
-		Rectangle pedalsBar = new Rectangle(600, 3);
-		pedalsBar.setArcWidth(6);
-		pedalsBar.setArcHeight(6);
-		pedalsBar.setFill(Color.rgb(239, 127, 2));
- 
-        Label pedalsLabel = new Label();
+		pedalsRectangle.widthProperty().bind(pedalsPane.widthProperty());
         pedalsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Pedals"));
-        pedalsLabel.setTextFill(Color.rgb(239, 127, 2));
-        pedalsLabel.setPadding(new Insets(0, 0, 10, 0));
  
-        pedalsBox.getChildren().add(pedalsBar);
-        pedalsBox.getChildren().add(pedalsLabel);
-        pedalsBox.setSpacing(3);
-        
-        GridPane pedalsPane = new GridPane();
-        pedalsPane.add(appsGauge, 1, 0);
-        pedalsPane.add(brakeGauge, 0, 0);
-        pedalsBox.getChildren().add(pedalsPane);
+        //pedalsPane.add(appsGauge, 1, 2);
+        pedalsPane.add(brakeGauge, 0, 2);
         
         @SuppressWarnings("rawtypes")
 		GaugeBuilder accelerometersGaugeBuilder = GaugeBuilder.create()
@@ -95,29 +74,16 @@ public class CarController implements Initializable {
 													.animated(true)
 													.decimals(0)
 													.maxValue(5)
-													.unit("m/s^2");
+													.unit("m/s\u00B2"); // m/s^2
 
 		accelerometerXGauge = accelerometersGaugeBuilder.build();
 		accelerometerZGauge = accelerometersGaugeBuilder.build();
 
-		Rectangle accelerometersBar = new Rectangle(600, 3);
-		accelerometersBar.setArcWidth(6);
-		accelerometersBar.setArcHeight(6);
-		accelerometersBar.setFill(Color.rgb(239, 127, 2));
-
-		Label accelerometersLabel = new Label();
+		accelerometersRectangle.widthProperty().bind(accelerometersPane.widthProperty());
 		accelerometersLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Accelerometers"));
-		accelerometersLabel.setTextFill(Color.rgb(239, 127, 2));
-		accelerometersLabel.setPadding(new Insets(0, 0, 10, 0));
-
-		accelerometersBox.getChildren().add(accelerometersBar);
-		accelerometersBox.getChildren().add(accelerometersLabel);
-		accelerometersBox.setSpacing(3);
         
-		GridPane accelerometersPane = new GridPane();
-        accelerometersPane.add(accelerometerXGauge, 0, 0);
-        accelerometersPane.add(accelerometerZGauge, 1, 0);
-        accelerometersBox.getChildren().add(accelerometersPane);
+        accelerometersPane.add(accelerometerXGauge, 0, 2);
+        accelerometersPane.add(accelerometerZGauge, 1, 2);
         
         @SuppressWarnings("rawtypes")
 		GaugeBuilder wheelsGaugeBuilder = GaugeBuilder.create()
@@ -134,30 +100,16 @@ public class CarController implements Initializable {
 		lrWheelGauge = wheelsGaugeBuilder.build();
 		rrWheelGauge = wheelsGaugeBuilder.build();
 		
-		Rectangle wheelsBar = new Rectangle(600, 3);
-		wheelsBar.setArcWidth(6);
-		wheelsBar.setArcHeight(6);
-		wheelsBar.setFill(Color.rgb(239, 127, 2));
- 
-        Label wheelsLabel = new Label();
-        wheelsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Wheels"));
+		wheelsRectangle.widthProperty().bind(wheelsPane.widthProperty());
+		wheelsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Wheels"));
         
-        wheelsLabel.setTextFill(Color.rgb(239, 127, 2));
-        wheelsLabel.setPadding(new Insets(0, 0, 10, 0));
- 
-        wheelsBox.getChildren().add(wheelsBar);
-        wheelsBox.getChildren().add(wheelsLabel);
-        wheelsBox.setSpacing(3);
+        wheelsPane.add(lfWheelGauge, 0, 2);
+        wheelsPane.add(rfWheelGauge, 1, 2);
+        wheelsPane.add(lrWheelGauge, 0, 3);
+        wheelsPane.add(rrWheelGauge, 1, 3);        
         
-        GridPane wheelsPane = new GridPane();
-        wheelsPane.add(lfWheelGauge, 0, 0);
-        wheelsPane.add(rfWheelGauge, 1, 0);
-        wheelsPane.add(lrWheelGauge, 0, 1);
-        wheelsPane.add(rrWheelGauge, 1, 1);
-        wheelsBox.getChildren().add(wheelsPane);
-        
-        // SUSPENSIONS
-        @SuppressWarnings("rawtypes")
+        // SUSPENSIONS 
+		@SuppressWarnings("rawtypes")
 		GaugeBuilder suspensionsGaugeBuilder = GaugeBuilder.create()
 													.skinType(Gauge.SkinType.SLIM)
 													.barColor(Color.rgb(239, 127, 2))
@@ -172,26 +124,24 @@ public class CarController implements Initializable {
 		lrSuspensionGauge = suspensionsGaugeBuilder.build();
 		rrSuspensionGauge = suspensionsGaugeBuilder.build();
 
-		Rectangle suspensionsBar = new Rectangle(600, 3);
-		suspensionsBar.setArcWidth(6);
-		suspensionsBar.setArcHeight(6);
-		suspensionsBar.setFill(Color.rgb(239, 127, 2));
-
-		Label suspensionsLabel = new Label();
+		suspensionsRectangle.widthProperty().bind(suspensionsPane.widthProperty());
 		suspensionsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Suspensions"));
-		suspensionsLabel.setTextFill(Color.rgb(239, 127, 2));
-		suspensionsLabel.setPadding(new Insets(0, 0, 10, 0));
 
-		suspensionsBox.getChildren().add(suspensionsBar);
-		suspensionsBox.getChildren().add(suspensionsLabel);
-		suspensionsBox.setSpacing(3);
+        suspensionsPane.add(lfSuspensionGauge, 0, 2);
+        suspensionsPane.add(rfSuspensionGauge, 1, 2);
+        suspensionsPane.add(lrSuspensionGauge, 0, 3);
+        suspensionsPane.add(rrSuspensionGauge, 1, 3);
         
-        GridPane suspensionsPane = new GridPane();
-        suspensionsPane.add(lfSuspensionGauge, 0, 0);
-        suspensionsPane.add(rfSuspensionGauge, 1, 0);
-        suspensionsPane.add(lrSuspensionGauge, 0, 1);
-        suspensionsPane.add(rrSuspensionGauge, 1, 1);
-        suspensionsBox.getChildren().add(suspensionsPane);
+        primaryStage.widthProperty().addListener((__) -> {
+        	wheelsPane.setMaxWidth(wheelsPane.getHeight() * 1.2);
+	        suspensionsPane.setMaxWidth(suspensionsPane.getHeight() * 1.2);
+	        accelerometersPane.setMaxWidth(accelerometersPane.getHeight() * 1.2);
+	        pedalsPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+	    });
+        
+        //primaryStage.heightProperty().addListener((__) -> {
+        //	carImageView.setFitHeight(wheelsPane.getHeight());
+	    //});
 	}
 	
 	public CarController(Stage primaryStage) {
@@ -199,7 +149,7 @@ public class CarController implements Initializable {
 	}
 	
 	public void updateView() {
-		appsGauge.setValue(Session.getDefaultInstance().getCar().getPedals().getTps1());
+		acceleratorGauge.setValue(Session.getDefaultInstance().getCar().getPedals().getTps1());
 		brakeGauge.setValue(Session.getDefaultInstance().getCar().getPedals().getBrake());
 		
 		lfWheelGauge.setValue(Session.getDefaultInstance().getCar().getWheels().getLfWheelRpm());

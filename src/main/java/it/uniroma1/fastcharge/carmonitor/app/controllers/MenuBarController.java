@@ -92,10 +92,11 @@ public class MenuBarController implements Initializable {
 		Stage stage = new Stage();
 		
 		stage.titleProperty().bind(I18N.createStringBinding("ChartView.StageTitle"));
-		stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue)
-                stage.setMaximized(true);
-        });
+		
+		stage.setResizable(true);
+        stage.setMaximized(true);
+        stage.setMinHeight(600.0);
+        stage.setMinWidth(800.0);
 		
         try {
         	CarChartController carChartController = new CarChartController(stage);
@@ -105,12 +106,9 @@ public class MenuBarController implements Initializable {
         	
             JFXDecorator decorator = new JFXDecorator(stage, root);
             
-            Scene scene = new Scene(decorator, 400, 300);
+            Scene scene = new Scene(decorator);
             scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
             stage.setScene(scene);
-            
-            stage.setResizable(true);
-            stage.setMaximized(true);
             
             stage.centerOnScreen();
 
@@ -203,14 +201,20 @@ public class MenuBarController implements Initializable {
 	}
 	
 	private void handleSerialRadioConnect(ActionEvent e) {
-		TaskExecutor.getInstance().perform(new RadioConnectTask());
+		RadioConnectTask connect = new RadioConnectTask();
+		TaskExecutor.getInstance().perform(connect);
+		if (!connect.isConnected())
+			return;
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
 		rootController.connectView();
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
-		TaskExecutor.getInstance().perform(new RadioDisconnectTask());
+		RadioDisconnectTask disconnect = new RadioDisconnectTask();
+		TaskExecutor.getInstance().perform(disconnect);
+		if (!disconnect.isDisconnected())
+			return;
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
 		rootController.disconnectView();
