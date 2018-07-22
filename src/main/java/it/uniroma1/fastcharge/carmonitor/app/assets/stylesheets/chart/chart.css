@@ -1,0 +1,33 @@
+.chart-plot-background {
+    -fx-background-color: white;
+}
+/*
+.chart-vertical-grid-lines {
+    -fx-stroke: #3278fa;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #3278fa;
+}
+
+*/
+.chart-alternative-row-fill {
+    -fx-fill: derive(#696969, 110%);
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.chart-data-display {
+    -fx-background-color: transparent; -fx-box-border: transparent;
+}
+
+.hover {
+    /* -fx-background-color: default-color0; -fx-box-border: default-color0; */
+}
+
+.tooltip {
+    -fx-background: rgba(105, 105, 105, 0.8);
+    -fx-text-fill: white;
+    -fx-background-color: rgba(105, 105, 105, 0.8);
+    -fx-padding: 10px;
+    -fx-font-size: 16pt;
+}

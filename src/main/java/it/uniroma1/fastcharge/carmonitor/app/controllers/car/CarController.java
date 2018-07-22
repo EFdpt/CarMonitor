@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -26,8 +27,8 @@ public class CarController implements Initializable {
 	@FXML
 	private Label pedalsLabel, wheelsLabel, suspensionsLabel, accelerometersLabel;
 	
-	//@FXML
-	//private ImageView carImageView;
+	@FXML
+	private AnchorPane carImageView;
 	
 	@FXML
 	private Rectangle pedalsRectangle, wheelsRectangle, suspensionsRectangle, accelerometersRectangle;
@@ -142,6 +143,8 @@ public class CarController implements Initializable {
         //primaryStage.heightProperty().addListener((__) -> {
         //	carImageView.setFitHeight(wheelsPane.getHeight());
 	    //});
+        
+        //carImageView.setStyle("-fx-background-image: url('../../assets/resources/images/car.png'); -fx-background-size: contain;");
 	}
 	
 	public CarController(Stage primaryStage) {

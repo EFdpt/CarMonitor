@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -43,6 +44,7 @@ public class MainApp extends Application {
     private void loadSplashScreen() {
     	Scene scene;
     	splashStage = new Stage();
+    	splashStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
     	
         try {
             StackPane pane = FXMLLoader.load(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/splash/SplashView.fxml"));
@@ -88,7 +90,8 @@ public class MainApp extends Application {
 		JFXDecorator decorator = new JFXDecorator(primaryStage, rootLayout);
 		
 		primaryStage.setMinHeight(600.0);
-		primaryStage.setMinWidth(800.0);		
+		primaryStage.setMinWidth(800.0);	
+		primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
 		Scene scene = new Scene(decorator);
 		scene.getStylesheets().add(getClass().getResource("assets/stylesheets/application.css").toExternalForm());

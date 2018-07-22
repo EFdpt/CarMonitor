@@ -130,6 +130,8 @@
                </image>
             </ImageView>
             -->
+            <AnchorPane fx:id="carImageView" style="-fx-background-image: url=&quot;@../../assets/resources/images/car_render.png&quot;; -fx-background-size: contain;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            </AnchorPane>
          </children>
       </GridPane>
    </children>

@@ -29,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -95,12 +96,14 @@ public class MenuBarController implements Initializable {
 		
 		stage.setResizable(true);
         stage.setMaximized(true);
-        stage.setMinHeight(600.0);
+        stage.setMinHeight(300.0);
         stage.setMinWidth(800.0);
+        
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
         	CarChartController carChartController = new CarChartController(stage);
-        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/car/chart/ChartView.fxml"));
+        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/car/chart/ChartsGeneralView.fxml"));
         	loader.setController(carChartController);
         	root = loader.load();
         	
@@ -108,6 +111,8 @@ public class MenuBarController implements Initializable {
             
             Scene scene = new Scene(decorator);
             scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/chart/chartGeneralView.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/chart/chart.css").toExternalForm());
             stage.setScene(scene);
             
             stage.centerOnScreen();
@@ -129,6 +134,8 @@ public class MenuBarController implements Initializable {
             if (newValue)
                 stage.setMaximized(false);
         });
+		
+		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
         	AboutUsController aboutUsController = new AboutUsController(primaryStage, stage);
@@ -234,6 +241,8 @@ public class MenuBarController implements Initializable {
             if (newValue)
                 stage.setIconified(false);
         });
+		
+		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
         	PreferencesController preferencesController = new PreferencesController(primaryStage, stage);

@@ -1,0 +1,49 @@
+.root {
+	-highlight-color: #ef7f02;
+	-grey-color: #696969;
+	-theme-color: -grey-color;
+	-fx-font-family: "Comfortaa";
+}
+
+.scroll-pane {
+    -fx-background-color: derive(-theme-color, -40%);
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -highlight-color;
+    -fx-background-radius: 5em;
+    -fx-padding: 5em;
+}
+
+.scroll-pane > .corner {
+	-fx-background-color: derive(-theme-color, -40%);
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0 1 0 1;
+}
+.split-pane:vertical > .split-pane-divider {
+	-fx-padding: 0 2 0 2;
+}
+
+.split-pane-divider {
+    -fx-background-color: derive(-theme-color, -40%);
+    -fx-background-insets: 0;
+}
