@@ -18,7 +18,9 @@ import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,6 +40,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
@@ -66,7 +69,11 @@ class ChartController implements Initializable {
 										suspensionRLSeries, suspensionRRSeries, accXSeries, accZSeries;
 	
 	@FXML
-	private NumberAxis numberAxisY;
+	private NumberAxis numberAxisX, numberAxisY;
+	
+	private Region plotArea;
+    private DoubleProperty lastMouseX;
+    private DoubleProperty lastMouseY;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -230,7 +237,61 @@ class ChartController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	
+    	plotArea = (Region) lineChart.lookup("Region");
+    	
+    	lastMouseX = new SimpleDoubleProperty();
+        lastMouseY = new SimpleDoubleProperty();
+        /*
+        lineChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+              final double x = event.getX();
+              final double y = event.getY();
+              if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
+                lastMouseX.set(x);
+                lastMouseY.set(y);
+                System.out.println(x + " x " + y);
+              }
+            }
+          });*/
+
+        /*
+        lineChart.setOnMousePressed(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent event) {
+            final double x = event.getX();
+            final double y = event.getY();
+            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
+              lastMouseX.set(x);
+              lastMouseY.set(y);
+            }
+          }
+        });
+        
+        lineChart.setOnMouseDragged(new EventHandler<MouseEvent>() {
+          @Override
+          public void handle(MouseEvent event) {
+            final double x = event.getX();
+            final double y = event.getY();
+            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
+              moveAxis(numberAxisX, x, lastMouseX);
+              moveAxis(numberAxisY, y, lastMouseY);
+            }
+          }
+        });
+        */
 	}
+	
+	/*
+	private void moveAxis(NumberAxis axis, double mouseLocation, DoubleProperty lastMouseLocation) {
+		double scale = axis.getScale();
+		double delta = (mouseLocation - lastMouseLocation.get()) / scale;
+		axis.setLowerBound(axis.getLowerBound() - delta);
+		axis.setUpperBound(axis.getUpperBound() - delta);
+		lastMouseLocation.set(mouseLocation);
+	}
+	*/
 	
 	public Parent getChartLayout() {
 		return chartLayout;
@@ -269,10 +330,10 @@ class ChartController implements Initializable {
 				int i = 1;
 				while ((car = (Car) inputStream.readObject()) != null) {
 					Data<Number, Number> data = new Data<>(i, callback.call(car));
-					data.setNode(new HoveredThresholdNode(callback.call(car).toString(), callback.call(car).toString()));
-					Tooltip t = new Tooltip(callback.call(car).toString());
-					hackTooltipStartTiming(t);
-			        Tooltip.install(data.getNode(), t);
+					data.setNode(new HoveredThresholdNode(callback.call(car).toString()));
+					//Tooltip t = new Tooltip(callback.call(car).toString());
+					//hackTooltipStartTiming(t);
+			        //Tooltip.install(data.getNode(), t);
 					serie.getData().add(data);
 					i++;
 				}			
@@ -288,6 +349,8 @@ class ChartController implements Initializable {
 					e.printStackTrace();
 				}
 			}
+			
+			
 			
 			lineChart.getData().add(serie);
 		}
@@ -313,45 +376,63 @@ class ChartController implements Initializable {
 	
 	/** a node which displays a value on hover, but is otherwise empty */
 	class HoveredThresholdNode extends StackPane {
-		HoveredThresholdNode(String priorValue, String value) {
+		HoveredThresholdNode(String value) {
+			setPrefSize(10, 10);
 			getStyleClass().add("chart-data-display");
 			setCache(true);
 			final Rectangle r = new Rectangle(1, 1080);
 			
 			r.heightProperty().bind(lineChart.heightProperty().multiply(2.0));
-/*
-			final Label label = createDataThresholdLabel(priorValue, value);
-*/
+
+			final Label label = createDataThresholdLabel(value);
+
 			setOnMouseEntered(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
-					//getChildren().setAll(label);
-					//setCursor(Cursor.NONE);
-					//toFront();
-					getChildren().setAll(r);
+					getChildren().setAll(r, label);
+					setCursor(Cursor.NONE);
+					toFront();
 					getStyleClass().add("hover");
+					/*final double x = mouseEvent.getX();
+					final double y = mouseEvent.getY();
+		            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
+		                lastMouseX.set(x);
+		                lastMouseY.set(y);
+		                System.out.println(x + " x " + y);
+		            }*/
+					Point2D mouseSceneCoords = new Point2D(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+				    double y = numberAxisY.sceneToLocal(mouseSceneCoords).getY();
+				    double valY = plotArea.getHeight() - y;
+				    
+				   if (valY < 60)
+				    	label.setTranslateY(-35);
 				}
 			});
 			setOnMouseExited(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
-					//getChildren().clear();
-					//setCursor(Cursor.CROSSHAIR);
 					getChildren().clear();
+					setCursor(Cursor.CROSSHAIR);
 					getStyleClass().remove("hover");
 				}
 			});
 		}
-/*
-		private Label createDataThresholdLabel(String priorValue, String value) {
+
+		private Label createDataThresholdLabel(String value) {
 			final Label label = new Label(value);
-			label.getStyleClass().addAll("default-color0", "chart-line-symbol",
-			"chart-series-line");
-			label.setStyle("-fx-font-size: 16;");
+			label.setCache(true);
+			label.setTranslateY(35);
+			label.applyCss();
 			
-			label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+			//label.getStyleClass().addAll("default-color0", "chart-line-symbol",
+			//"chart-series-line");
+			//label.setStyle("-fx-font-size: 16;");
+			label.getStyleClass().add("chart-data-label");
+			
+			label.setMinSize(Label.USE_PREF_SIZE, USE_PREF_SIZE);
+			label.setPrefHeight(40.0);
 			return label;
 		}
-*/
+
 	}
 }

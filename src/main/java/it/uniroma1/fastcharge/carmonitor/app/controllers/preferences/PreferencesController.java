@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import it.uniroma1.fastcharge.carmonitor.app.controllers.MainController;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.binding.Bindings;
@@ -48,6 +49,8 @@ public class PreferencesController implements Initializable {
 	
 	@FXML
 	private Button applyButton, cancelButton, chooseLogDirButton;
+	
+	private MainController rootController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -67,6 +70,8 @@ public class PreferencesController implements Initializable {
 		chooseLogDirButton.textProperty().bind(I18N.createStringBinding("Preferences.Choose"));
 		
 		baudrateTextField.setText(Integer.toString(ApplicationPreferences.getConfiguration().getBaudRate()));
+		
+		refreshTimeSlider.setValue(ApplicationPreferences.getConfiguration().getChartRefreshTime());
 		
 		languageComboBox.setItems(FXCollections.observableArrayList(I18N.getSupportedLocales()));
 		
@@ -94,9 +99,10 @@ public class PreferencesController implements Initializable {
 		}
 	}
 	
-	public PreferencesController(Stage parentStage, Stage stage) {
+	public PreferencesController(Stage parentStage, Stage stage, MainController rootController) {
 		this.parentStage = parentStage;
 		this.stage = stage;
+		this.rootController = rootController;
 	}
 	
 	public void shutdown() {
@@ -150,6 +156,7 @@ public class PreferencesController implements Initializable {
 		
 		shutdown();
 		stage.close();
+		rootController.showUserNotice("Notice.PreferencesSaved");
 	}
 	
 	private void cancelPreferences(ActionEvent event) {

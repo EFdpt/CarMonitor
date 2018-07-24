@@ -205,6 +205,7 @@ public class MenuBarController implements Initializable {
 		
 		SetRadioTask task = new SetRadioTask(radio);
 		TaskExecutor.getInstance().perform(task);
+		rootController.showUserNotice("Notice.PortSetted");
 	}
 	
 	private void handleSerialRadioConnect(ActionEvent e) {
@@ -215,6 +216,7 @@ public class MenuBarController implements Initializable {
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
 		rootController.connectView();
+		rootController.showUserNotice("Notice.RadioConnected");
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
@@ -225,6 +227,7 @@ public class MenuBarController implements Initializable {
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
 		rootController.disconnectView();
+		rootController.showUserNotice("Notice.RadioDisconnected");
 	}
 	
 	private void handleShowPreferences(ActionEvent event) {
@@ -245,7 +248,7 @@ public class MenuBarController implements Initializable {
 		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
-        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage);
+        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage, rootController);
         	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/preferences/PreferencesView.fxml"));
     		loader.setController(preferencesController);
     		root = loader.load();

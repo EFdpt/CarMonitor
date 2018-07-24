@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -49,6 +50,7 @@ public class MainApp extends Application {
         try {
             StackPane pane = FXMLLoader.load(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/splash/SplashView.fxml"));
             scene = new Scene(pane);
+            scene.setFill(Color.TRANSPARENT);
             splashStage.setScene(scene);
             splashStage.initStyle(StageStyle.TRANSPARENT);
             splashStage.show();

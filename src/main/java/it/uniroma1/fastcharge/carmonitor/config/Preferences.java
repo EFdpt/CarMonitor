@@ -2,6 +2,9 @@ package it.uniroma1.fastcharge.carmonitor.config;
 
 import java.util.Locale;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 public class Preferences {
 	
 	private int DEFAULT_BAUDRATE = 9600;
@@ -13,11 +16,15 @@ public class Preferences {
 	private double chartRefreshTime;
 	private String logDir;
 	
+	private DoubleProperty chartRefreshTimeProperty;
+	
 	public Preferences() {
 		locale = Locale.getDefault();
 		baudRate =  DEFAULT_BAUDRATE;
 		chartRefreshTime = DEFAULT_CHART_REFRESH_TIME;
 		logDir = DEFAULT_LOG_DIR;
+		
+		chartRefreshTimeProperty = new SimpleDoubleProperty(DEFAULT_CHART_REFRESH_TIME);
 	}
 	
 	public Locale getLocale() {
@@ -44,8 +51,13 @@ public class Preferences {
 		return chartRefreshTime;
 	}
 	
+	public DoubleProperty chartRefreshTimeProperty() {
+		return chartRefreshTimeProperty;
+	}
+	
 	public void setChartRefreshTime(double chartRefreshTime) {
 		this.chartRefreshTime = chartRefreshTime;
+		chartRefreshTimeProperty.set(chartRefreshTime);
 	}
 	
 	public String getLogDir() {

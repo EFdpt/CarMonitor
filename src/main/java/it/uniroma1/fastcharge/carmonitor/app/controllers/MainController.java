@@ -11,16 +11,19 @@ import it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.car.chart.CarChartController;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.LoadPreferencesTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
+import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -90,16 +93,24 @@ public class MainController implements Initializable {
 	
 	public void connectView() {
 		timeline = new Timeline(
-			    new KeyFrame(Duration.millis(50), e -> {
+			    new KeyFrame(Duration.seconds(1), e -> {
 			        // update all views
 			    	carController.updateView();
 			    })
 			);
 		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.rateProperty()
+        .bind(new SimpleDoubleProperty(1.0)
+        .divide(ApplicationPreferences.getConfiguration().chartRefreshTimeProperty()));
 		timeline.play();
 	}
 	
 	public void disconnectView() {
 		timeline.stop();
+		carController.unbindView();
+	}
+	
+	public void showUserNotice(String message) {
+		carController.showUserNotice(message);
 	}
 }

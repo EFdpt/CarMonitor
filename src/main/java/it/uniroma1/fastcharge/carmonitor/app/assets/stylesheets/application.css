@@ -75,4 +75,11 @@
     -fx-padding: 0;
 }
 
-
+.user-message-notice {
+	-fx-font-size: 20 pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: -highlight-color;
+	-fx-background-color: derive(-theme-color, -20%);
+	-fx-border-color: -highlight-color;
+	-fx-border-width: 2 0 0 0;
+}

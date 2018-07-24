@@ -26,7 +26,7 @@ public final class I18N {
     }
 	
     public static List<Locale> getSupportedLocales() {
-        return new ArrayList<>(Arrays.asList(new Locale("it", "IT"), new Locale("en", "EN"), new Locale("fr", "FR")));
+        return new ArrayList<>(Arrays.asList(new Locale("it", "IT"), new Locale("en", "EN"), new Locale("fr", "FR"), new Locale("de", "DE"), new Locale("el", "GR")));
     }
     
     public static Locale getDefaultLocale() {
