@@ -25,7 +25,7 @@ public class RadioDisconnectTask implements Task {
 			Session.getDefaultInstance().getOutputStream().close();
 			Session.getDefaultInstance().getFileOutputStream().close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	

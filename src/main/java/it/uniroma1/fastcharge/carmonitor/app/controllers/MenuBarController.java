@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXDecorator;
 
@@ -19,6 +21,7 @@ import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExe
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -53,7 +56,7 @@ public class MenuBarController implements Initializable {
 		exportCsvMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Export.Prev"));
 		closeMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Close"));	
 		radioMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio"));
-		serialPortMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio.Port"));
+		serialPortMenu.textProperty().bind(Bindings.format("%s", I18N.createStringBinding("Menu.Radio.Port")));
 		connectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Connect"));
 		disconnectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Disconnect"));
 		windowMenu.textProperty().bind(I18N.createStringBinding("Menu.Window"));
@@ -205,29 +208,46 @@ public class MenuBarController implements Initializable {
 		
 		SetRadioTask task = new SetRadioTask(radio);
 		TaskExecutor.getInstance().perform(task);
-		rootController.showUserNotice("Notice.PortSetted");
+		rootController.showUserNotice(I18N.get("Notice.PortSetted"));
+		rootController.showRadioStatus("Radio: [" + radio.getSystemPortName() + "]");
 	}
 	
 	private void handleSerialRadioConnect(ActionEvent e) {
 		RadioConnectTask connect = new RadioConnectTask();
-		TaskExecutor.getInstance().perform(connect);
-		if (!connect.isConnected())
+		try {
+			TaskExecutor.getInstance().perform(connect);
+		} catch (Exception ex) {
+			// log
+		}
+		
+		if (!connect.isConnected()) {
+			rootController.showUserNotice(I18N.get("Notice.RadioConnect.Failed"));
 			return;
+		}
+		
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
 		rootController.connectView();
-		rootController.showUserNotice("Notice.RadioConnected");
+		rootController.showUserNotice(I18N.get("Notice.RadioConnect.Success"));
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
 		RadioDisconnectTask disconnect = new RadioDisconnectTask();
-		TaskExecutor.getInstance().perform(disconnect);
-		if (!disconnect.isDisconnected())
+		try {
+			TaskExecutor.getInstance().perform(disconnect);
+		} catch (Exception ex) {
+			// log
+		}
+		
+		if (!disconnect.isDisconnected()) {
+			rootController.showUserNotice(I18N.get("Notice.RadioDisconnect.Failed"));
 			return;
+		}
+		
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
 		rootController.disconnectView();
-		rootController.showUserNotice("Notice.RadioDisconnected");
+		rootController.showUserNotice(I18N.get("Notice.RadioDisconnect.Success"));
 	}
 	
 	private void handleShowPreferences(ActionEvent event) {
@@ -282,10 +302,10 @@ public class MenuBarController implements Initializable {
 	private void exportCsvPreviousSession(ActionEvent event) {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser logChooser = new FileChooser();
-		logChooser.setTitle("Open log file");
+		logChooser.titleProperty().bind(I18N.createStringBinding("Export.LogChooser.Title"));
 		logChooser.setInitialDirectory(new File(ApplicationPreferences.getConfiguration().getLogDir()));
         FileChooser csvChooser = new FileChooser();
-        csvChooser.setTitle("Choose csv file");
+        csvChooser.titleProperty().bind(I18N.createStringBinding("Export.CsvChooser.Title"));
         csvChooser.getExtensionFilters().add(extFilter);
         File selectedFile = 
                 logChooser.showOpenDialog(primaryStage);
@@ -293,10 +313,14 @@ public class MenuBarController implements Initializable {
                 csvChooser.showSaveDialog(primaryStage);
          
         if (selectedFile != null && csvFile != null) {
-        	System.out.println("Exporting log to csv file...");
-        	ExportCsvTask export = new ExportCsvTask(selectedFile, csvFile);
-        	TaskExecutor.getInstance().perform(export);
-        	System.out.println("Export done!");
+        	ExportCsvTask export;
+			try {
+				export = new ExportCsvTask(selectedFile, csvFile);
+				TaskExecutor.getInstance().perform(export);
+	        	rootController.showUserNotice(I18N.get("Notice.Export.Success"));
+			} catch (Exception e) {
+				rootController.showUserNotice(I18N.get("Notice.Export.Failed"));
+			}
         }
 	}
 }

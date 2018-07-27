@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController">
+<AnchorPane stylesheets="@/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/car/carGeneralView.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController">
    <children>
       <GridPane hgap="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -19,14 +19,12 @@
             <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="10.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="5.0" valignment="BOTTOM" vgrow="ALWAYS" />
-          <RowConstraints percentHeight="30.0" valignment="BOTTOM" vgrow="ALWAYS" />
-          <RowConstraints percentHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-          <RowConstraints percentHeight="25.0" valignment="TOP" vgrow="ALWAYS" />
-            <RowConstraints percentHeight="10.0" valignment="TOP" vgrow="ALWAYS" />
+          <RowConstraints percentHeight="35.0" valignment="BOTTOM" vgrow="ALWAYS" />
+          <RowConstraints percentHeight="35.0" valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints percentHeight="30.0" valignment="TOP" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-			<GridPane fx:id="wheelsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+			<GridPane fx:id="wheelsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
@@ -34,7 +32,7 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints percentHeight="5.0" valignment="BOTTOM" vgrow="ALWAYS" />
-                  <RowConstraints percentHeight="15.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints percentHeight="15.0" valignment="TOP" vgrow="ALWAYS" />
                   <RowConstraints percentHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
                 <RowConstraints percentHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
               </rowConstraints>
@@ -45,19 +43,16 @@
                         <Insets top="-5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Gauge fx:id="lfWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="2500" minValue="0" skinType="SLIM" title="WheelLF" unit="RPM" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="rfWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="2500" minValue="0" skinType="SLIM" title="WheelRF" unit="RPM" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="lrWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="2500" minValue="0" skinType="SLIM" title="WheelLR" unit="RPM" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="rrWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="2500" minValue="0" skinType="SLIM" title="WheelRR" unit="RPM" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="lfWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="WheelLF" unit="RPM" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="rfWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="WheelRF" unit="RPM" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="lrWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="WheelLR" unit="RPM" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="rrWheelGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="WheelRR" unit="RPM" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
                </children>
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="15.0" />
                </GridPane.margin>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
             </GridPane>
-            <GridPane fx:id="suspensionsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+            <GridPane fx:id="suspensionsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
@@ -65,7 +60,7 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints percentHeight="5.0" valignment="BOTTOM" vgrow="ALWAYS" />
-                  <RowConstraints percentHeight="15.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints percentHeight="15.0" valignment="TOP" vgrow="ALWAYS" />
                   <RowConstraints percentHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
                   <RowConstraints percentHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
                </rowConstraints>
@@ -76,16 +71,16 @@
                         <Insets top="-5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Gauge fx:id="lfSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="75" minValue="0" skinType="SLIM" title="SuspLF" unit="mm" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="rfSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="75" minValue="0" skinType="SLIM" title="SuspRF" unit="mm" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="lrSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="75" minValue="0" skinType="SLIM" title="SuspLR" unit="mm" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="rrSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="75" minValue="0" skinType="SLIM" title="SuspRR" unit="mm" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="lfSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="SuspLF" unit="mm" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="rfSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="SuspRF" unit="mm" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="lrSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="SuspLR" unit="mm" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="rrSuspensionGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="SuspRR" unit="mm" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
                </children>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
             </GridPane>
-            <GridPane fx:id="accelerometersPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+            <GridPane fx:id="accelerometersPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
@@ -93,7 +88,7 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints percentHeight="5.0" valignment="BOTTOM" vgrow="ALWAYS" />
-                  <RowConstraints percentHeight="15.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints percentHeight="15.0" valignment="TOP" vgrow="ALWAYS" />
                   <RowConstraints percentHeight="45.0" valignment="TOP" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
@@ -103,14 +98,14 @@
                         <Insets top="-5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Gauge fx:id="accelerometerXGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="5" minValue="0" skinType="SLIM" title="AccelerometerX" unit="m/s²" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                  <Gauge fx:id="accelerometerZGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" maxValue="5" minValue="0" skinType="SLIM" title="AccelerometerZ" unit="m/s²" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="accelerometerXGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="AccelerometerX" unit="m/s²" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                  <Gauge fx:id="accelerometerZGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="#ef7f02" decimals="0" minValue="0" skinType="SLIM" title="AccelerometerZ" unit="m/s²" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                </children>
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="15.0" />
                </GridPane.margin>
             </GridPane>
-            <GridPane fx:id="pedalsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane fx:id="pedalsPane" hgap="5.0" vgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" percentWidth="50.0" />
                   <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" percentWidth="50.0" />
@@ -118,7 +113,7 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints percentHeight="5.0" valignment="BOTTOM" vgrow="ALWAYS" />
-                  <RowConstraints percentHeight="15.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints percentHeight="15.0" valignment="TOP" vgrow="ALWAYS" />
                   <RowConstraints percentHeight="45.0" valignment="TOP" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
@@ -132,7 +127,7 @@
                   <Gauge fx:id="acceleratorGauge" animated="true" barBackgroundColor="rgba(105, 105, 105, 0.2);" barColor="green" decimals="0" maxValue="100" minValue="0" skinType="SLIM" title="APPS" unit="\%" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                </children>
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="15.0" />
                </GridPane.margin>
             </GridPane>
             <!-- 
@@ -142,17 +137,30 @@
                </image>
             </ImageView>
             -->
-            <AnchorPane fx:id="carImageView" style="-fx-background-image: url=&quot;@../../assets/resources/images/car_render.png&quot;; -fx-background-size: contain;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
-            </AnchorPane>
-            <Label fx:id="userNoticeLabel" styleClass="user-message-notice" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" top="5.0" />
-               </padding>
+            <AnchorPane fx:id="carImagePane" styleClass="image-view" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="30.0" />
                </GridPane.margin>
-            </Label>
+               <children>
+               <!-- 
+                  <ImageView cache="true" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                     <image>
+                        <Image url="@../../assets/resources/images/car.png" />
+                     </image>
+                  </ImageView>
+                  -->
+               </children></AnchorPane>
          </children>
       </GridPane>
+      <Label fx:id="userNoticeLabel" styleClass="user-message-notice" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <padding>
+            <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
+         </padding>
+      </Label>
+      <Label fx:id="radioPortNotice" styleClass="radio-status-notice" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <padding>
+            <Insets bottom="4.0" right="10.0" top="4.0" />
+         </padding>
+      </Label>
    </children>
 </AnchorPane>

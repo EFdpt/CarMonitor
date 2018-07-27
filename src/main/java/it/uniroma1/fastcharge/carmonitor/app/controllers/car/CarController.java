@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
+import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
@@ -12,6 +13,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -34,7 +36,7 @@ public class CarController implements Initializable {
 	private Label pedalsLabel, wheelsLabel, suspensionsLabel, accelerometersLabel;
 	
 	@FXML
-	private AnchorPane carImageView;
+	private AnchorPane carImagePane;
 	
 	@FXML
 	private Rectangle pedalsRectangle, wheelsRectangle, suspensionsRectangle, accelerometersRectangle;
@@ -45,15 +47,18 @@ public class CarController implements Initializable {
 			accelerometerXGauge, accelerometerZGauge;
 	
 	@FXML
-	private Label userNoticeLabel;
+	private Label userNoticeLabel, radioPortNotice;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {		
+	public void initialize(URL location, ResourceBundle resources) {
+		radioPortNotice.setText("");
 		
 		// pedals
 		acceleratorGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Pedals.APPS"));
 		
 		brakeGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Pedals.Brake"));
+		acceleratorGauge.setBarColor(Color.web("#0ccc1f"));
+		brakeGauge.setBarColor(Color.web("#f71818"));
 		
 		pedalsRectangle.widthProperty().bind(pedalsPane.widthProperty());
         pedalsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Pedals"));
@@ -61,6 +66,10 @@ public class CarController implements Initializable {
         // accelerometers
         accelerometerXGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Accelerometers.X"));
         accelerometerZGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Accelerometers.Z"));
+        accelerometerXGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getAccelerometersMaxValueProperty());
+        accelerometerZGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getAccelerometersMaxValueProperty());
+        accelerometerXGauge.setBarColor(Color.web("#ef7f02"));
+        accelerometerZGauge.setBarColor(Color.web("#ef7f02"));
         
         accelerometersRectangle.widthProperty().bind(accelerometersPane.widthProperty());
 		accelerometersLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Accelerometers"));
@@ -70,6 +79,14 @@ public class CarController implements Initializable {
         rfWheelGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Wheels.FR"));
         lrWheelGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Wheels.RL"));
         rrWheelGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Wheels.RR"));
+        lfWheelGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getRpmMaxValueProperty());
+        rfWheelGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getRpmMaxValueProperty());
+        lrWheelGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getRpmMaxValueProperty());
+        rrWheelGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getRpmMaxValueProperty());
+        lfWheelGauge.setBarColor(Color.web("#ef7f02"));
+        rfWheelGauge.setBarColor(Color.web("#ef7f02"));
+        lrWheelGauge.setBarColor(Color.web("#ef7f02"));
+        rrWheelGauge.setBarColor(Color.web("#ef7f02"));
 		
 		wheelsRectangle.widthProperty().bind(wheelsPane.widthProperty());
 		wheelsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Wheels"));
@@ -79,26 +96,28 @@ public class CarController implements Initializable {
 		rfSuspensionGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Suspensions.FR"));
 		lrSuspensionGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Suspensions.RL"));
 		rrSuspensionGauge.titleProperty().bind(I18N.createStringBinding("Vehicle.Suspensions.RR"));
-
+		lfSuspensionGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getSuspensionsMaxValueProperty());
+		rfSuspensionGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getSuspensionsMaxValueProperty());
+		lrSuspensionGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getSuspensionsMaxValueProperty());
+		rrSuspensionGauge.maxValueProperty().bind(ApplicationPreferences.getConfiguration().getCarPreferences().getSuspensionsMaxValueProperty());
+		lfSuspensionGauge.setBarColor(Color.web("#ef7f02"));
+		rfSuspensionGauge.setBarColor(Color.web("#ef7f02"));
+		lrSuspensionGauge.setBarColor(Color.web("#ef7f02"));
+		rrSuspensionGauge.setBarColor(Color.web("#ef7f02"));
+		
 		suspensionsRectangle.widthProperty().bind(suspensionsPane.widthProperty());
 		suspensionsLabel.textProperty().bind(I18N.createStringBinding("Vehicle.Suspensions"));
+		
+		carImagePane.setMaxWidth(pedalsPane.getHeight() * 1.2);
         
         primaryStage.widthProperty().addListener((__) -> {
-        	wheelsPane.setMaxWidth(wheelsPane.getHeight() * 1.2);
-	        suspensionsPane.setMaxWidth(suspensionsPane.getHeight() * 1.2);
-	        accelerometersPane.setMaxWidth(accelerometersPane.getHeight() * 1.2);
-	        pedalsPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+        	pedalsPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+        	wheelsPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+	        suspensionsPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+	        accelerometersPane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+	        carImagePane.setMaxWidth(pedalsPane.getHeight() * 1.2);
+	        userNoticeLabel.setPrefWidth(primaryStage.getWidth());
 	    });
-        
-        primaryStage.widthProperty().addListener((__) -> {
-           userNoticeLabel.setPrefWidth(primaryStage.getWidth());
-    	});
-        
-        //primaryStage.heightProperty().addListener((__) -> {
-        //	carImageView.setFitHeight(wheelsPane.getHeight());
-	    //});
-        
-        //carImageView.setStyle("-fx-background-image: url('../../assets/resources/images/car.png'); -fx-background-size: contain;");
 	}
 	
 	public CarController(Stage primaryStage) {
@@ -142,10 +161,10 @@ public class CarController implements Initializable {
 	}
 	
 	public void showUserNotice(String message) {
-		userNoticeLabel.setText(I18N.get(message));
+		userNoticeLabel.setText(message);
 		
 		Timeline timeline = new Timeline(
-				new KeyFrame(Duration.seconds(8), e -> {
+				new KeyFrame(Duration.seconds(10), e -> {
 			        userNoticeLabel.setText("");
 			    })
 			);
@@ -154,4 +173,7 @@ public class CarController implements Initializable {
 		timeline.play();
 	}
 
+	public void showRadioStatus(String message) {
+		radioPortNotice.setText(message);
+	}
 }

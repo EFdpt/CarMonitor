@@ -39,7 +39,7 @@ public class RadioConnectTask implements Task {
 	    	Session.getDefaultInstance().setOutputStream(out);
 	    	Session.getDefaultInstance().setFileOutputStream(fileOut);
 	    } catch (IOException i) {
-	    	i.printStackTrace();
+	    	throw new RuntimeException(i);
 	    }
 		
 		connected = Session.getDefaultInstance().getRadio().open();

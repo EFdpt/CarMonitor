@@ -100,8 +100,8 @@ public class MainController implements Initializable {
 			);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.rateProperty()
-        .bind(new SimpleDoubleProperty(1.0)
-        .divide(ApplicationPreferences.getConfiguration().chartRefreshTimeProperty()));
+        .bind(new SimpleDoubleProperty(100.0)
+        .divide(ApplicationPreferences.getConfiguration().viewRefreshTimeProperty()));
 		timeline.play();
 	}
 	
@@ -112,5 +112,9 @@ public class MainController implements Initializable {
 	
 	public void showUserNotice(String message) {
 		carController.showUserNotice(message);
+	}
+	
+	public void showRadioStatus(String message) {
+		carController.showRadioStatus(message);
 	}
 }

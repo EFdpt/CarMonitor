@@ -26,7 +26,7 @@
 }
 
 .slider .track {
-    -fx-background-color: -theme-color;
+    -fx-background-color: derive(-theme-color, 30%);
 }
 
 .slider > .thumb {
@@ -61,7 +61,7 @@
 }
 
 .text-field .input-line {
-    -fx-background-color: -theme-color;
+    -fx-background-color: derive(-theme-color, 30%);
 }
 
 .jfx-text-field {
@@ -82,7 +82,10 @@
     -fx-text-fill: -theme-color;
 }
 
-.combo-box-popup .list-view .jfx-list-cell:odd,
+.combo-box-popup .list-view .jfx-list-cell:odd {
+	 -fx-background-color: derive(white, -5%);
+}
+
 .combo-box-popup .list-view .jfx-list-cell:even {
     -fx-background-color: white;
 }
@@ -91,3 +94,23 @@
     -fx-text-fill: -highlight-color;
 }
 
+.accordion {
+	-fx-box-border: transparent;
+}
+
+.titled-pane {
+	-fx-text-fill: -highlight-color;
+	-fx-font-size: 15 pt;
+}
+
+.accordion .titled-pane .title {
+    -fx-background-color: derive(-theme-color, -60%);
+}
+
+.accordion .titled-pane > *.content {
+	-fx-background-color: derive(-theme-color, -10%);
+}
+
+.accordion .titled-pane > .title > .arrow-button .arrow {
+  -fx-background-color: white;
+}
