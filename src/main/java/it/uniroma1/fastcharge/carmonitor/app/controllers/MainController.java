@@ -100,8 +100,7 @@ public class MainController implements Initializable {
 			);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.rateProperty()
-        .bind(new SimpleDoubleProperty(100.0)
-        .divide(ApplicationPreferences.getConfiguration().viewRefreshTimeProperty()));
+        .bind(ApplicationPreferences.getConfiguration().viewRefreshTimeProperty());
 		timeline.play();
 	}
 	

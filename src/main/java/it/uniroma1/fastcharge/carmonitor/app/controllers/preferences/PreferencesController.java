@@ -204,13 +204,13 @@ public class PreferencesController implements Initializable {
 		
 		try {
 			ApplicationPreferences.savePreferences();
+			rootController.showUserNotice(I18N.get("Notice.PreferencesSaved"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		shutdown();
 		stage.close();
-		rootController.showUserNotice(I18N.get("Notice.PreferencesSaved"));
 	}
 	
 	private void cancelPreferences(ActionEvent event) {

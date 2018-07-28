@@ -110,7 +110,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <JFXSlider fx:id="viewRefreshTimeSlider" blockIncrement="0.2" majorTickUnit="0.2" max="5.0" min="2.0" minorTickCount="1" prefHeight="24.0" prefWidth="149.0" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <JFXSlider fx:id="viewRefreshTimeSlider" blockIncrement="10.0" majorTickUnit="10.0" max="60.0" min="1.0" minorTickCount="10" prefHeight="24.0" prefWidth="149.0" value="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
@@ -155,17 +155,17 @@
                             <RowConstraints percentHeight="34.0" valignment="CENTER" vgrow="ALWAYS" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="rpmMaxValueLabel" text="Label" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="rpmMaxValueLabel" alignment="CENTER_RIGHT" text="Label" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="suspMaxValueLabel" text="Label" GridPane.rowIndex="1">
+                              <Label fx:id="suspMaxValueLabel" alignment="CENTER_RIGHT" text="Label" textAlignment="RIGHT" textOverrun="WORD_ELLIPSIS" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="accMaxValueLabel" text="Label" GridPane.rowIndex="2">
+                              <Label fx:id="accMaxValueLabel" alignment="CENTER_RIGHT" text="Label" textAlignment="RIGHT" textOverrun="CLIP" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>

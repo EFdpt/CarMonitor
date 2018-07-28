@@ -30,7 +30,7 @@ public final class OptionsBeanAdapter implements JsonSerializer<Preferences>, Js
 	        obj.addProperty("locale", localeToString(src.getLocale()));
 	        obj.addProperty("baudRate", src.getBaudRate());
 	        obj.addProperty("chartRefreshTime", src.getChartRefreshTime());
-	        obj.addProperty("viewRefreshTime", src.getChartRefreshTime());
+	        obj.addProperty("viewRefreshTime", src.getViewRefreshTime());
 	        obj.addProperty("logDir", src.getLogDir());
 	        
 	        el = carPreferencesBeanAdapter.serialize(src.getCarPreferences(), typeOfSrc, context);
@@ -53,7 +53,7 @@ public final class OptionsBeanAdapter implements JsonSerializer<Preferences>, Js
 			result.setLocale(stringToLocale(jobject.get("locale").getAsString()));
 			result.setBaudRate(jobject.get("baudRate").getAsInt());
 			result.setChartRefreshTime(jobject.get("chartRefreshTime").getAsDouble());
-			result.setChartRefreshTime(jobject.get("viewRefreshTime").getAsDouble());
+			result.setViewRefreshTime(jobject.get("viewRefreshTime").getAsDouble());
 			result.setLogDir(jobject.get("logDir").getAsString());
 			
 			carPreferences = carPreferencesBeanAdapter.deserialize(jobject.get("carPreferences"), typeOfSrc, context);

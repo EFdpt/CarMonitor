@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.gillius.jfxutils.chart.ChartPanManager;
+import org.gillius.jfxutils.chart.ChartZoomManager;
+import org.gillius.jfxutils.chart.JFXChartUtil;
+
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
@@ -39,7 +43,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -71,9 +77,13 @@ class ChartController implements Initializable {
 	@FXML
 	private NumberAxis numberAxisX, numberAxisY;
 	
+	@FXML
+	private Rectangle selectRect;
+	
+	@FXML
+	private AnchorPane chartPane;
+	
 	private Region plotArea;
-    private DoubleProperty lastMouseX;
-    private DoubleProperty lastMouseY;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -211,7 +221,20 @@ class ChartController implements Initializable {
             }
         });
 		
-		
+        ChartZoomManager zoomManager = new ChartZoomManager(chartPane, selectRect, lineChart);
+        ChartPanManager panManager = new ChartPanManager(lineChart);
+        
+        panManager.setMouseFilter( new EventHandler<MouseEvent>() {
+			@Override
+			public void handle( MouseEvent mouseEvent ) {
+				if (mouseEvent.getButton() != MouseButton.MIDDLE)
+					mouseEvent.consume();
+			}
+        } );
+        
+        zoomManager.start();
+        panManager.start();
+        JFXChartUtil.addDoublePrimaryClickAutoRangeHandler(lineChart);
 	}
 	
 	public ChartController(CarChartController parentController) {
@@ -239,60 +262,8 @@ class ChartController implements Initializable {
 		}
     	
     	plotArea = (Region) lineChart.lookup("Region");
-    	
-    	lastMouseX = new SimpleDoubleProperty();
-        lastMouseY = new SimpleDoubleProperty();
-        /*
-        lineChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-              final double x = event.getX();
-              final double y = event.getY();
-              if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
-                lastMouseX.set(x);
-                lastMouseY.set(y);
-                System.out.println(x + " x " + y);
-              }
-            }
-          });*/
-
-        /*
-        lineChart.setOnMousePressed(new EventHandler<MouseEvent>() {
-          @Override
-          public void handle(MouseEvent event) {
-            final double x = event.getX();
-            final double y = event.getY();
-            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
-              lastMouseX.set(x);
-              lastMouseY.set(y);
-            }
-          }
-        });
-        
-        lineChart.setOnMouseDragged(new EventHandler<MouseEvent>() {
-          @Override
-          public void handle(MouseEvent event) {
-            final double x = event.getX();
-            final double y = event.getY();
-            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
-              moveAxis(numberAxisX, x, lastMouseX);
-              moveAxis(numberAxisY, y, lastMouseY);
-            }
-          }
-        });
-        */
 	}
-	
-	/*
-	private void moveAxis(NumberAxis axis, double mouseLocation, DoubleProperty lastMouseLocation) {
-		double scale = axis.getScale();
-		double delta = (mouseLocation - lastMouseLocation.get()) / scale;
-		axis.setLowerBound(axis.getLowerBound() - delta);
-		axis.setUpperBound(axis.getUpperBound() - delta);
-		lastMouseLocation.set(mouseLocation);
-	}
-	*/
-	
+    
 	public Parent getChartLayout() {
 		return chartLayout;
 	}
@@ -356,23 +327,6 @@ class ChartController implements Initializable {
 		}
 	}
 	
-	private static void hackTooltipStartTiming(Tooltip tooltip) {
-	    try {
-	        Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
-	        fieldBehavior.setAccessible(true);
-	        Object objBehavior = fieldBehavior.get(tooltip);
-
-	        Field fieldTimer = objBehavior.getClass().getDeclaredField("activationTimer");
-	        fieldTimer.setAccessible(true);
-	        Timeline objTimer = (Timeline) fieldTimer.get(objBehavior);
-
-	        objTimer.getKeyFrames().clear();
-	        objTimer.getKeyFrames().add(new KeyFrame(new Duration(250)));
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
 	
 	/** a node which displays a value on hover, but is otherwise empty */
 	class HoveredThresholdNode extends StackPane {
@@ -393,13 +347,6 @@ class ChartController implements Initializable {
 					setCursor(Cursor.NONE);
 					toFront();
 					getStyleClass().add("hover");
-					/*final double x = mouseEvent.getX();
-					final double y = mouseEvent.getY();
-		            if (plotArea.getBoundsInParent().contains(new Point2D(x, y))) {
-		                lastMouseX.set(x);
-		                lastMouseY.set(y);
-		                System.out.println(x + " x " + y);
-		            }*/
 					Point2D mouseSceneCoords = new Point2D(mouseEvent.getSceneX(), mouseEvent.getSceneY());
 				    double y = numberAxisY.sceneToLocal(mouseSceneCoords).getY();
 				    double valY = plotArea.getHeight() - y;
@@ -424,9 +371,6 @@ class ChartController implements Initializable {
 			label.setTranslateY(35);
 			label.applyCss();
 			
-			//label.getStyleClass().addAll("default-color0", "chart-line-symbol",
-			//"chart-series-line");
-			//label.setStyle("-fx-font-size: 16;");
 			label.getStyleClass().add("chart-data-label");
 			
 			label.setMinSize(Label.USE_PREF_SIZE, USE_PREF_SIZE);

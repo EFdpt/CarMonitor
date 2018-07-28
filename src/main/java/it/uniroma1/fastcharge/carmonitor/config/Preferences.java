@@ -9,7 +9,7 @@ public class Preferences {
 	
 	private int DEFAULT_BAUDRATE = 115200;
 	private double DEFAULT_CHART_REFRESH_TIME = 0.5;
-	private double DEFAULT_VIEW_REFRESH_TIME = 2.0;
+	private double DEFAULT_VIEW_REFRESH_TIME = 30.0;
 	private String DEFAULT_LOG_DIR = "logs";
 	
 	private Locale locale;
