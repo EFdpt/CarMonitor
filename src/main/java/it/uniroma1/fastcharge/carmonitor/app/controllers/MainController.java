@@ -10,6 +10,7 @@ import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.car.CarController;
 import it.uniroma1.fastcharge.carmonitor.app.controllers.car.chart.CarChartController;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.LoadPreferencesTask;
+import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.RadioDisconnectTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.animation.FadeTransition;
@@ -81,6 +82,16 @@ public class MainController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/MainView.fxml"));
     	loader.setControllerFactory(controllerFactory);
     	this.rootLayout = loader.load();
+    	
+    	timeline = new Timeline(
+			    new KeyFrame(Duration.seconds(1), e -> {
+			        // update all views
+			    	carController.updateView();
+			    })
+			);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.rateProperty()
+        .bind(ApplicationPreferences.getConfiguration().viewRefreshTimeProperty());
 	}
 	
 	public Parent getRootParent() {
@@ -92,15 +103,6 @@ public class MainController implements Initializable {
 	}
 	
 	public void connectView() {
-		timeline = new Timeline(
-			    new KeyFrame(Duration.seconds(1), e -> {
-			        // update all views
-			    	carController.updateView();
-			    })
-			);
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.rateProperty()
-        .bind(ApplicationPreferences.getConfiguration().viewRefreshTimeProperty());
 		timeline.play();
 	}
 	
@@ -115,5 +117,16 @@ public class MainController implements Initializable {
 	
 	public void showRadioStatus(String message) {
 		carController.showRadioStatus(message);
+	}
+	
+	
+	public void stop() {
+		disconnectView();
+		RadioDisconnectTask disconnect = new RadioDisconnectTask();
+		try {
+			TaskExecutor.getInstance().perform(disconnect);
+		} catch (Exception ex) {
+			// log
+		}
 	}
 }

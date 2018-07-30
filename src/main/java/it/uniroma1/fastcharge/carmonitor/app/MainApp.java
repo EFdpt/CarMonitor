@@ -25,6 +25,7 @@ public class MainApp extends Application {
 	private Stage primaryStage;
 	private Stage splashStage;
 	private Parent rootLayout;
+	private MainController rootController;
 	
     public static void main(String[] args) {
         launch(args);
@@ -39,6 +40,7 @@ public class MainApp extends Application {
     
     @Override
     public void stop() {
+    	rootController.stop();
     	Platform.exit();
     }
     
@@ -86,7 +88,7 @@ public class MainApp extends Application {
     
     private void loadMainScreen() throws IOException {
     	
-    	MainController rootController = new MainController(primaryStage);
+    	rootController = new MainController(primaryStage);
     	rootLayout = rootController.getRootParent();
     	
 		JFXDecorator decorator = new JFXDecorator(primaryStage, rootLayout);
