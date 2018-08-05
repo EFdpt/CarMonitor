@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.atomic.ExportCsvTask;
 import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExecutor;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
+import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.beans.value.ChangeListener;
@@ -63,12 +64,21 @@ public class CarChartController implements Initializable {
 	
 	private File prevSessionFile = null;
 	
-	private ConcurrentHashMap<Integer, ChartController> charts;
+	private ConcurrentHashMap<Integer, ChartController> chartsMap;
+	private ChartController charts[];
 
 	public CarChartController(Stage stage) {
 		this.stage = stage;
 		
-		this.charts = new ConcurrentHashMap<Integer, ChartController>(4);
+		this.chartsMap = new ConcurrentHashMap<Integer, ChartController>(4);
+		this.charts = new ChartController[4];
+		
+		charts[0] = new ChartController(this);
+		charts[1] = new ChartController(this);
+		charts[2] = new ChartController(this);
+		charts[3] = new ChartController(this);
+		
+		this.stage.setOnCloseRequest(e -> closeStage());
 	}
 
 	@Override
@@ -81,6 +91,11 @@ public class CarChartController implements Initializable {
         viewPrevSessionMenuItem.textProperty().bind(I18N.createStringBinding("ChartView.Menu.Chart.ShowPrev"));
         
         realChartMenuItem.setText("Real-Time");
+        
+        showGraphOne.textProperty().bind(I18N.createStringBinding("ChartView.Graph.Show"));
+        showGraphTwo.textProperty().bind(I18N.createStringBinding("ChartView.Graph.Show"));
+        showGraphThree.textProperty().bind(I18N.createStringBinding("ChartView.Graph.Show"));
+        showGraphFour.textProperty().bind(I18N.createStringBinding("ChartView.Graph.Show"));
         
         showGraphOne.setSelected(true);
         showGraphTwo.setSelected(true);
@@ -95,6 +110,7 @@ public class CarChartController implements Initializable {
         // set actions
         closeMenuItem.setOnAction(this::handleCloseWindow);
         viewPrevSessionMenuItem.setOnAction(this::handleShowPrevSession);
+        realChartMenuItem.setOnAction(this::handleShowRealTime);
         
         showGraphOne.setOnAction((event) -> {
         	if (((CheckBox) event.getSource()).isSelected())
@@ -123,7 +139,16 @@ public class CarChartController implements Initializable {
 	}
 	
 	public void handleCloseWindow(ActionEvent e) {
+		closeStage();
+	}
+	
+	private void closeStage() {
+		chartsMap.values().forEach((c) -> c.stopChart());
 		stage.close();
+	}
+	
+	public void handleShowRealTime(ActionEvent e) {
+		chartsMap.values().forEach((c) -> c.setChartRealTime());
 	}
 
 	public void handleShowPrevSession(ActionEvent e) {
@@ -135,22 +160,19 @@ public class CarChartController implements Initializable {
 		prevSessionFile = logChooser.showOpenDialog(stage);
 		
 		if (prevSessionFile != null)
-			charts.values().forEach((c) -> c.setChartSource(prevSessionFile));
+			chartsMap.values().forEach((c) -> c.setChartSource(prevSessionFile));
 	}
 	
 	private void showGraph(int index) {
-		ChartController chartController = new ChartController(this); // create and initialize graph
-		Parent chartLayout = chartController.getChartLayout();
-		this.charts.put(index, chartController);
-		
+		if (index < 0 || index > 3) return;
 		if (prevSessionFile != null)
-			chartController.setChartSource(prevSessionFile);
+			charts[index].setChartSource(prevSessionFile);
 		
-		chartsSplitPaneContainer.getItems().add(index, chartLayout);
+		chartsSplitPaneContainer.getItems().add(charts[index].getChartLayout());
 	}
 	
 	private void hideGraph(int index) {
-		charts.remove(index);
-		chartsSplitPaneContainer.getItems().remove(index);
+		if (index < 0 || index > 3) return;
+		chartsSplitPaneContainer.getItems().remove(charts[index].getChartLayout());
 	}
 }

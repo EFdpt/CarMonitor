@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTreeView?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<SplitPane minHeight="140.0" dividerPositions="0.2, 0.8" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.2" minHeight="140.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
 	<items>
-		<AnchorPane minWidth="150.0" maxWidth="300.0" prefWidth="150.0">
+		<AnchorPane maxWidth="300.0" minWidth="150.0" prefWidth="150.0">
 			<children>
-				<JFXTreeView fx:id="carTreeView" layoutX="-21.0"
-					layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+				<TreeView fx:id="carTreeView" layoutX="-21.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 			</children>
 		</AnchorPane>
 		<AnchorPane fx:id="chartPane">
 			<children>
-				<LineChart fx:id="lineChart" layoutX="-79.0" layoutY="-40.0"
-					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<xAxis>
-						<NumberAxis fx:id="numberAxisX" />
-					</xAxis>
-					<yAxis>
-						<NumberAxis fx:id="numberAxisY" />
-					</yAxis>
-				</LineChart>
-				<Rectangle fx:id="selectRect" fill="DODGERBLUE" height="0.0" mouseTransparent="true"
-             opacity="0.3" stroke="#002966" strokeType="INSIDE" strokeWidth="3.0" width="0.0"
-             x="0.0" y="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <LineChart fx:id="lineChart" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+	      				<xAxis>
+	      					<NumberAxis fx:id="numberAxisX" />
+	      				</xAxis>
+	      				<yAxis>
+	      					<NumberAxis fx:id="numberAxisY" />
+	      				</yAxis>
+	      			</LineChart>
+	      			<Rectangle fx:id="selectRect" fill="DODGERBLUE" height="0.0" mouseTransparent="true" opacity="0.3" stroke="#002966" strokeType="INSIDE" strokeWidth="3.0" width="0.0" x="0.0" y="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ScrollBar fx:id="chartScrollBar" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />			
 			</children>
 		</AnchorPane>
 	</items>
 </SplitPane>
-

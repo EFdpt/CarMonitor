@@ -3,7 +3,7 @@ apply plugin: 'application'
 apply plugin: 'distribution'
 apply plugin: 'groovy'
 
-apply from: 'gradle/gradle/helpers.gradle'
+//apply from: 'gradle/gradle/helpers.gradle'
  
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -18,7 +18,7 @@ jar {
         attributes "Main-Class": "it.uniroma1.fastcharge.carmonitor.app.MainApp"
     }
 }
-
+/*
 // Global Settings /////////////////////////////////////////////////////////////
 project.ext {
 	applicationVersion = "1.0-alpha"
@@ -33,7 +33,7 @@ project.ext {
 
 // Gradle scripts and tasks ////////////////////////////////////////////////////
 
-apply from: 'gradle/gradle/packaging.innosetup.gradle'
+apply from: 'gradle/gradle/packaging.innosetup.gradle' */
 
 // Projects settings  //////////////////////////////////////////////////////////
 

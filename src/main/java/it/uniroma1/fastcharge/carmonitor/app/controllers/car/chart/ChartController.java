@@ -18,7 +18,9 @@ import org.gillius.jfxutils.chart.JFXChartUtil;
 
 import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.models.car.Car;
+import it.uniroma1.fastcharge.carmonitor.app.models.session.Session;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
+import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
@@ -40,12 +42,16 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -59,6 +65,9 @@ class ChartController implements Initializable {
 	private Parent chartLayout;
 	
 	private File source;
+	private double lastX;
+	private double realX;
+	private volatile boolean scrolling = false;
 	
 	@FXML
 	private TreeView<String> carTreeView;
@@ -83,8 +92,17 @@ class ChartController implements Initializable {
 	@FXML
 	private AnchorPane chartPane;
 	
+	@FXML
+	private ScrollBar chartScrollBar;
+	
 	private Region plotArea;
 
+	private ChartZoomManager zoomManager;
+	private ChartPanManager panManager;
+	
+	private Timeline realTimeline;
+	private int 	xReal;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		rootItem = new TreeItem<String>();
@@ -221,20 +239,44 @@ class ChartController implements Initializable {
             }
         });
 		
-        ChartZoomManager zoomManager = new ChartZoomManager(chartPane, selectRect, lineChart);
-        ChartPanManager panManager = new ChartPanManager(lineChart);
+        zoomManager = new ChartZoomManager(chartPane, selectRect, lineChart);
+        panManager = new ChartPanManager(lineChart);
         
-        panManager.setMouseFilter( new EventHandler<MouseEvent>() {
+        panManager.setMouseFilter(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle( MouseEvent mouseEvent ) {
-				if (mouseEvent.getButton() != MouseButton.MIDDLE)
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton() != MouseButton.SECONDARY && 
+							mouseEvent.getButton() != MouseButton.MIDDLE)
 					mouseEvent.consume();
 			}
         } );
         
-        zoomManager.start();
-        panManager.start();
         JFXChartUtil.addDoublePrimaryClickAutoRangeHandler(lineChart);
+        
+        chartScrollBar.addEventFilter(MouseEvent.DRAG_DETECTED, (v) -> {
+        	scrolling = true;
+        });
+        
+        chartScrollBar.addEventFilter(MouseEvent.MOUSE_DRAGGED, (v) -> {
+        	if (!scrolling)
+        		return;
+        	double axisRange = numberAxisX.getUpperBound() - numberAxisX.getLowerBound();
+        	lastX = chartScrollBar.getValue();
+        	double lower = lastX;
+        	double upper = lastX + axisRange;
+        	numberAxisX.setAutoRanging(false);
+			numberAxisX.setLowerBound(lower);
+			numberAxisX.setUpperBound(upper);
+        });
+        
+        chartScrollBar.addEventFilter(MouseEvent.MOUSE_RELEASED, (v) -> {
+        	if (!scrolling)
+        		return;
+        	scrolling = false;
+        });
+        
+        chartScrollBar.setDisable(true);
+        chartScrollBar.setMin(0.0d);
 	}
 	
 	public ChartController(CarChartController parentController) {
@@ -263,6 +305,10 @@ class ChartController implements Initializable {
     	
     	plotArea = (Region) lineChart.lookup("Region");
 	}
+	
+	public void stopChart() {
+		realTimeline.stop();
+	}
     
 	public Parent getChartLayout() {
 		return chartLayout;
@@ -272,6 +318,57 @@ class ChartController implements Initializable {
 		this.source = source;
 		if (!lineChart.getData().isEmpty())
 			lineChart.getData().remove(0, lineChart.getData().size());
+		zoomManager.start();
+        panManager.start();
+	}
+	
+	public void setChartRealTime() {
+		if (!lineChart.getData().isEmpty())
+        	lineChart.getData().remove(0, lineChart.getData().size());
+		zoomManager.stop();
+        //panManager.stop();
+        this.source = null;
+        xReal = 0;
+	}
+	
+	private void getRealTimeCar(String textBinding, Series<Number, Number> serie, Callback<Car, Number> callback) {
+		for (Series<Number, Number> s : lineChart.getData()) {
+			if (s.getName().equals(I18N.get(textBinding))) {
+				serie.getData().clear();
+				return;
+			}
+		}
+		
+		serie.nameProperty().bind(I18N.createStringBinding(textBinding));
+		lineChart.getData().add(serie);
+		numberAxisX.setForceZeroInRange(false);
+		numberAxisX.setAutoRanging(false);
+		
+		realTimeline = new Timeline(
+			    new KeyFrame(Duration.seconds(1), e -> {
+			    	if (!Session.getDefaultInstance().getRadio().isOpen())
+			    		return;
+			    	Data<Number, Number> data = new Data<>(xReal, callback.call(Session.getDefaultInstance().getCar()));
+					serie.getData().add(data);
+					double axisRange = numberAxisX.getUpperBound() - numberAxisX.getLowerBound();
+					
+					chartScrollBar.setMax(xReal - axisRange);
+					
+					if (!scrolling && xReal > axisRange) {
+						chartScrollBar.setDisable(false);
+						chartScrollBar.setValue(xReal - axisRange);
+						numberAxisX.setLowerBound(xReal - axisRange);
+						numberAxisX.setUpperBound(xReal);
+					}
+					
+					xReal++;
+			    })
+			);
+        realTimeline.setCycleCount(Timeline.INDEFINITE);
+        realTimeline.rateProperty()
+        .bind(new SimpleDoubleProperty(1.0)
+        		.divide(ApplicationPreferences.getConfiguration().chartRefreshTimeProperty()));
+        realTimeline.play();
 	}
 	
 	private void showProperty(String textBinding, Series<Number, Number> serie, Callback<Car, Number> callback) {
@@ -302,9 +399,6 @@ class ChartController implements Initializable {
 				while ((car = (Car) inputStream.readObject()) != null) {
 					Data<Number, Number> data = new Data<>(i, callback.call(car));
 					data.setNode(new HoveredThresholdNode(callback.call(car).toString()));
-					//Tooltip t = new Tooltip(callback.call(car).toString());
-					//hackTooltipStartTiming(t);
-			        //Tooltip.install(data.getNode(), t);
 					serie.getData().add(data);
 					i++;
 				}			
@@ -321,9 +415,10 @@ class ChartController implements Initializable {
 				}
 			}
 			
-			
-			
+			numberAxisX.setForceZeroInRange(true);
 			lineChart.getData().add(serie);
+		} else if (Session.getDefaultInstance().getRadio().isOpen()) {
+			getRealTimeCar(textBinding, serie, callback);
 		}
 	}
 	
@@ -377,6 +472,5 @@ class ChartController implements Initializable {
 			label.setPrefHeight(40.0);
 			return label;
 		}
-
 	}
 }

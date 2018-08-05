@@ -46,6 +46,8 @@ class SerialRadioDataListener implements SerialPortDataListener {
 				Car car;
 				
 				car = CarRadioAdapter.getAdapter().deserialize(recvString.substring(0, recvString.lastIndexOf(DEFAULT_BUFFER_SEPARATOR)).getBytes());
+				
+				Session.getDefaultInstance().setCar(car);
 				Session.getDefaultInstance().getOutputStream().writeObject(car);
 				Session.getDefaultInstance().getOutputStream().reset();
 				Session.getDefaultInstance().getOutputStream().flush();
