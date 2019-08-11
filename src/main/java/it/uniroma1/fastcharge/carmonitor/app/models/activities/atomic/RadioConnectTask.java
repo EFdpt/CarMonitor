@@ -14,6 +14,7 @@ import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
 public class RadioConnectTask implements Task {
 	
 	private volatile boolean executed = false;
+	private volatile boolean connected = false;
 	
 	public RadioConnectTask() {}
 
@@ -38,14 +39,18 @@ public class RadioConnectTask implements Task {
 	    	Session.getDefaultInstance().setOutputStream(out);
 	    	Session.getDefaultInstance().setFileOutputStream(fileOut);
 	    } catch (IOException i) {
-	    	i.printStackTrace();
+	    	throw new RuntimeException(i);
 	    }
 		
-		Session.getDefaultInstance().getRadio().open();
+		connected = Session.getDefaultInstance().getRadio().open();
 	}
 	
 	@Override
 	public boolean isExecuted() {
 		return executed;
+	}
+	
+	public boolean isConnected() {
+		return connected;
 	}
 }

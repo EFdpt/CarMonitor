@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXDecorator;
 
@@ -19,6 +21,7 @@ import it.uniroma1.fastcharge.carmonitor.app.models.activities.framework.TaskExe
 import it.uniroma1.fastcharge.carmonitor.app.models.radio.SerialRadio;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import it.uniroma1.fastcharge.carmonitor.config.ApplicationPreferences;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -29,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,7 +56,7 @@ public class MenuBarController implements Initializable {
 		exportCsvMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Export.Prev"));
 		closeMenuItem.textProperty().bind(I18N.createStringBinding("Menu.File.Close"));	
 		radioMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio"));
-		serialPortMenu.textProperty().bind(I18N.createStringBinding("Menu.Radio.Port"));
+		serialPortMenu.textProperty().bind(Bindings.format("%s", I18N.createStringBinding("Menu.Radio.Port")));
 		connectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Connect"));
 		disconnectMenuItem.textProperty().bind(I18N.createStringBinding("Menu.Radio.Disconnect"));
 		windowMenu.textProperty().bind(I18N.createStringBinding("Menu.Window"));
@@ -92,25 +96,27 @@ public class MenuBarController implements Initializable {
 		Stage stage = new Stage();
 		
 		stage.titleProperty().bind(I18N.createStringBinding("ChartView.StageTitle"));
-		stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue)
-                stage.setMaximized(true);
-        });
+		
+		stage.setResizable(true);
+        stage.setMaximized(true);
+        stage.setMinHeight(300.0);
+        stage.setMinWidth(800.0);
+        
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
         	CarChartController carChartController = new CarChartController(stage);
-        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/car/chart/ChartView.fxml"));
+        	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/car/chart/ChartsGeneralView.fxml"));
         	loader.setController(carChartController);
         	root = loader.load();
         	
             JFXDecorator decorator = new JFXDecorator(stage, root);
             
-            Scene scene = new Scene(decorator, 400, 300);
+            Scene scene = new Scene(decorator);
             scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/application.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/chart/chartGeneralView.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/assets/stylesheets/chart/chart.css").toExternalForm());
             stage.setScene(scene);
-            
-            stage.setResizable(true);
-            stage.setMaximized(true);
             
             stage.centerOnScreen();
 
@@ -131,6 +137,8 @@ public class MenuBarController implements Initializable {
             if (newValue)
                 stage.setMaximized(false);
         });
+		
+		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
 		
         try {
         	AboutUsController aboutUsController = new AboutUsController(primaryStage, stage);
@@ -200,20 +208,46 @@ public class MenuBarController implements Initializable {
 		
 		SetRadioTask task = new SetRadioTask(radio);
 		TaskExecutor.getInstance().perform(task);
+		rootController.showUserNotice(I18N.get("Notice.PortSetted"));
+		rootController.showRadioStatus("Radio: [" + radio.getSystemPortName() + "]");
 	}
 	
 	private void handleSerialRadioConnect(ActionEvent e) {
-		TaskExecutor.getInstance().perform(new RadioConnectTask());
+		RadioConnectTask connect = new RadioConnectTask();
+		try {
+			TaskExecutor.getInstance().perform(connect);
+		} catch (Exception ex) {
+			// log
+		}
+		
+		if (!connect.isConnected()) {
+			rootController.showUserNotice(I18N.get("Notice.RadioConnect.Failed"));
+			return;
+		}
+		
 		serialPortMenu.setDisable(true);
 		connectMenuItem.setDisable(true);
 		rootController.connectView();
+		rootController.showUserNotice(I18N.get("Notice.RadioConnect.Success"));
 	}
 	
 	private void handleSerialRadioDisconnect(ActionEvent e) {
-		TaskExecutor.getInstance().perform(new RadioDisconnectTask());
+		RadioDisconnectTask disconnect = new RadioDisconnectTask();
+		try {
+			TaskExecutor.getInstance().perform(disconnect);
+		} catch (Exception ex) {
+			// log
+		}
+		
+		if (!disconnect.isDisconnected()) {
+			rootController.showUserNotice(I18N.get("Notice.RadioDisconnect.Failed"));
+			return;
+		}
+		
 		serialPortMenu.setDisable(false);
 		connectMenuItem.setDisable(false);
 		rootController.disconnectView();
+		rootController.showUserNotice(I18N.get("Notice.RadioDisconnect.Success"));
 	}
 	
 	private void handleShowPreferences(ActionEvent event) {
@@ -231,8 +265,10 @@ public class MenuBarController implements Initializable {
                 stage.setIconified(false);
         });
 		
+		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast_charge_icon.png")));
+		
         try {
-        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage);
+        	PreferencesController preferencesController = new PreferencesController(primaryStage, stage, rootController);
         	FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/it/uniroma1/fastcharge/carmonitor/app/views/preferences/PreferencesView.fxml"));
     		loader.setController(preferencesController);
     		root = loader.load();
@@ -266,10 +302,10 @@ public class MenuBarController implements Initializable {
 	private void exportCsvPreviousSession(ActionEvent event) {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
 		FileChooser logChooser = new FileChooser();
-		logChooser.setTitle("Open log file");
+		logChooser.titleProperty().bind(I18N.createStringBinding("Export.LogChooser.Title"));
 		logChooser.setInitialDirectory(new File(ApplicationPreferences.getConfiguration().getLogDir()));
         FileChooser csvChooser = new FileChooser();
-        csvChooser.setTitle("Choose csv file");
+        csvChooser.titleProperty().bind(I18N.createStringBinding("Export.CsvChooser.Title"));
         csvChooser.getExtensionFilters().add(extFilter);
         File selectedFile = 
                 logChooser.showOpenDialog(primaryStage);
@@ -277,10 +313,14 @@ public class MenuBarController implements Initializable {
                 csvChooser.showSaveDialog(primaryStage);
          
         if (selectedFile != null && csvFile != null) {
-        	System.out.println("Exporting log to csv file...");
-        	ExportCsvTask export = new ExportCsvTask(selectedFile, csvFile);
-        	TaskExecutor.getInstance().perform(export);
-        	System.out.println("Export done!");
+        	ExportCsvTask export;
+			try {
+				export = new ExportCsvTask(selectedFile, csvFile);
+				TaskExecutor.getInstance().perform(export);
+	        	rootController.showUserNotice(I18N.get("Notice.Export.Success"));
+			} catch (Exception e) {
+				rootController.showUserNotice(I18N.get("Notice.Export.Failed"));
+			}
         }
 	}
 }

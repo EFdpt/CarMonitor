@@ -3,11 +3,13 @@ package it.uniroma1.fastcharge.carmonitor.app.controllers.aboutus;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.uniroma1.fastcharge.carmonitor.app.MainApp;
 import it.uniroma1.fastcharge.carmonitor.app.views.i18n.I18N;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class AboutUsController implements Initializable {
@@ -28,6 +30,8 @@ public class AboutUsController implements Initializable {
 	public AboutUsController(Stage parentStage, Stage stage) {
 		this.parentStage = parentStage;
 		this.stage = stage;
+		
+		stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/fast-charge-icon.ico")));
 	}
 	
 	public void shutdown() {

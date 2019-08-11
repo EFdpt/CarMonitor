@@ -1,0 +1,5 @@
+.image-view {
+	-fx-background-image: url("/it/uniroma1/fastcharge/carmonitor/app/assets/resources/images/car.png");
+	-fx-background-size: contain;
+	-fx-background-repeat: no-repeat;
+}

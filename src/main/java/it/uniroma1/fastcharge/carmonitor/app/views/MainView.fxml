@@ -3,11 +3,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.MainController">
-   <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-      	<fx:include source="MenuBar.fxml" />
-      	<fx:include source="car/CarGeneralView.fxml" />
-      </children>
-   </VBox>
+<AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.uniroma1.fastcharge.carmonitor.app.controllers.MainController">
+   <children>
+	   <VBox fx:id="mainPane" alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+	      <children>
+	      	<fx:include source="MenuBar.fxml" />
+	      	<fx:include source="car/CarGeneralView.fxml" />
+	      </children>
+	   </VBox>
+   </children>
 </AnchorPane>

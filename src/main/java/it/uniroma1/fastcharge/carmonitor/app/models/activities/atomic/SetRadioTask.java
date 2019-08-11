@@ -27,7 +27,6 @@ public class SetRadioTask implements Task {
 			Session.getDefaultInstance().setRadio(radio);
 		} else if (!sessRadio.isOpen()) // radio already setted but closed -> create new session and set radio
 			Session.getInstance().setRadio(this.radio);
-		System.out.println("Serial port successfully setted");
 	}
 
 	@Override

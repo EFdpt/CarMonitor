@@ -25,20 +25,15 @@ public class ExportCsvTask implements Task {
 	private BufferedWriter 	writer;
 	private CSVPrinter		printer;
 	
-	public ExportCsvTask(File logFile, File csvFile) {
-		try {
-			this.fileWriter = new FileWriter(csvFile);
-			this.writer = new BufferedWriter(fileWriter);
-			printer = new CSVPrinter(writer, CSVFormat.DEFAULT.withDelimiter(';')
-			        .withHeader("TPS1", "TPS2", "BRAKE", "APPS_PLAUSIBILITY", "BRAKE_PLAUSIBILITY",
-			        			"LF_WHEEL", "RF_WHEEL", "LR_WHEEL", "RR_WHEEL",
-			        			"LF_SUSP", "RF_SUSP", "LR_SUSP", "RR_SUSP",
-			        			"ACC_X", "ACC_Z"));
-			this.fileIn = new FileInputStream(logFile);
-			inputStream = new ObjectInputStream(fileIn);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ExportCsvTask(File logFile, File csvFile) throws IOException {
+		this.fileWriter = new FileWriter(csvFile);
+		this.writer = new BufferedWriter(fileWriter);
+		printer = new CSVPrinter(writer,
+				CSVFormat.DEFAULT.withDelimiter(';').withHeader("TPS1", "TPS2", "BRAKE", "APPS_PLAUSIBILITY",
+						"BRAKE_PLAUSIBILITY", "LF_WHEEL", "RF_WHEEL", "LR_WHEEL", "RR_WHEEL", "LF_SUSP", "RF_SUSP",
+						"LR_SUSP", "RR_SUSP", "ACC_X", "ACC_Z"));
+		this.fileIn = new FileInputStream(logFile);
+		inputStream = new ObjectInputStream(fileIn);
 	}
 
 	@Override
@@ -61,7 +56,7 @@ public class ExportCsvTask implements Task {
 		} catch (EOFException e) {
 			
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException();
 		} finally {
 			// close all
 			try {
@@ -71,7 +66,7 @@ public class ExportCsvTask implements Task {
 				writer.close();
 				fileWriter.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new RuntimeException();
 			}
 		}
 	}

@@ -1,0 +1,55 @@
+.root {
+	-highlight-color: #ef7f02;
+	-grey-color: #696969;
+	-theme-color: -grey-color;
+	-fx-font-family: "Comfortaa";
+}
+
+.chart-plot-background {
+    -fx-background-color: white;
+}
+/*
+.chart-vertical-grid-lines {
+    -fx-stroke: #3278fa;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #3278fa;
+}
+
+*/
+.chart-alternative-row-fill {
+    -fx-fill: derive(-grey-color, 110%);
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.chart-data-display {
+    -fx-background-color: transparent; -fx-box-border: transparent;
+}
+
+.chart-data-label {
+	-fx-background-color: rgb(105, 105, 105);
+	-fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-size: 22 pt;
+	-fx-font-weight: bold;
+	-fx-padding: 0.25em;
+}
+
+.hover {
+	-fx-background: rgb(105, 105, 105);
+    -fx-background-color: rgb(105, 105, 105);
+    /* -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-size: 16pt; */
+}
+
+/*
+.tooltip {
+    -fx-background: rgba(105, 105, 105, 0.8);
+    -fx-text-fill: white;
+    -fx-background-color: rgba(105, 105, 105, 0.8);
+    -fx-padding: 10px;
+    -fx-font-size: 16pt;
+}
+*/
