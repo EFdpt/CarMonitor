@@ -1,0 +1,116 @@
+.root {
+	-highlight-color: #ef7f02;
+	-grey-color: #696969;
+	-theme-color: -grey-color;
+	-fx-background-color: derive(-theme-color, -20%);
+	-fx-font-family: "Comfortaa";
+}
+
+.decorator {
+    -fx-decorator-color: derive(-theme-color, -70%);
+    -fx-text-fill: -highlight-color;
+}
+
+.decorator .decorator-buttons-container {
+    -fx-background-color: -fx-decorator-color;
+}
+
+.decorator .resize-border {
+    -fx-border-color: -fx-decorator-color;
+    -fx-border-width: 0 5 5 5;
+}
+
+.label {
+	-fx-font-size: 16 pt;
+	-fx-text-fill: -highlight-color;
+}
+
+.slider .track {
+    -fx-background-color: derive(-theme-color, 30%);
+}
+
+.slider > .thumb {
+     -fx-background-color: -highlight-color;
+}
+
+.slider > .colored-track {
+     -fx-background-color: -highlight-color;
+}
+
+/* Styling the animated thumb */
+.slider > .animated-thumb {
+     -fx-background-color: -highlight-color;
+}
+
+.button-highlight {
+	-fx-background-color: -highlight-color;
+	-fx-text-fill: white;
+	-fx-font-size: 18 pt;
+}
+
+.button-cancel {
+	-fx-background-color: derive(-theme-color, 20%);
+	-fx-text-fill: white;
+	-fx-font-size: 18 pt;
+}
+
+.text-field {
+	-fx-font-size: 16 pt;
+    -fx-text-fill: white;
+    -fx-highlight-fill: derive(-highlight-color, 30%);
+}
+
+.text-field .input-line {
+    -fx-background-color: derive(-theme-color, 30%);
+}
+
+.jfx-text-field {
+    -jfx-focus-color: -highlight-color;
+}
+
+.combo-box .cell {
+	-fx-font-size: 16 pt;
+	-fx-text-fill: white;
+}
+
+.jfx-combo-box {
+	-jfx-focus-color: -highlight-color;
+}
+
+.combo-box-popup .list-view .jfx-list-cell {
+    -fx-background-insets: 0.0;
+    -fx-text-fill: -theme-color;
+}
+
+.combo-box-popup .list-view .jfx-list-cell:odd {
+	 -fx-background-color: derive(white, -5%);
+}
+
+.combo-box-popup .list-view .jfx-list-cell:even {
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .jfx-list-cell:filled:hover {
+    -fx-text-fill: -highlight-color;
+}
+
+.accordion {
+	-fx-box-border: transparent;
+}
+
+.titled-pane {
+	-fx-text-fill: -highlight-color;
+	-fx-font-size: 15 pt;
+}
+
+.accordion .titled-pane .title {
+    -fx-background-color: derive(-theme-color, -60%);
+}
+
+.accordion .titled-pane > *.content {
+	-fx-background-color: derive(-theme-color, -10%);
+}
+
+.accordion .titled-pane > .title > .arrow-button .arrow {
+  -fx-background-color: white;
+}

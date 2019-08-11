@@ -1,0 +1,89 @@
+@font-face {
+	font-family: Arial;
+    src: url("../resources/fonts/comfortaa/Comfortaa-Regular.ttf");
+}
+
+.root {
+	-highlight-color: #ef7f02;
+	-grey-color: #696969;
+	-theme-color: -grey-color;
+	-fx-background-color: derive(-theme-color, -60%);
+	-fx-font-family: "Comfortaa";
+}
+
+.jfx-decorator {
+    -fx-decorator-color: derive(-theme-color, -70%);
+    -fx-text-fill: -highlight-color;
+}
+
+.jfx-decorator .jfx-decorator-buttons-container {
+    -fx-background-color: -fx-decorator-color;
+}
+
+.jfx-decorator .resize-border {
+    -fx-border-color: -fx-decorator-color;
+    -fx-border-width: 0 5 5 5;
+}
+
+.menu-bar {
+	-fx-background-color: -fx-decorator-color;
+	-fx-border-color: -highlight-color;
+    -fx-border-width: 0 0 2 0;
+}
+
+.menu-bar .label {
+	-fx-font-size: 22 pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: -highlight-color;
+	-fx-padding: 0.25em 1.5em 0.25em 1.5em;
+}
+
+.menu:hover,
+.menu:showing { /* selects Menu in MenuBar, if shown */
+    -fx-background-color: derive(-theme-color, -60%);
+}
+
+.menu-item {
+	-fx-background-color: derive(-theme-color, -40%);
+}
+
+.menu-item:hover {
+	-fx-background-color: derive(-theme-color, -20%);
+}
+
+.menu-item:disabled {
+	-fx-opacity: 1.0 ;
+}
+
+.menu-item-first {
+	-fx-border-color: -highlight-color;
+	-fx-border-width: 2 0 0 0;
+}
+
+.menu-item .label {
+	-fx-font-size: 20 pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: -highlight-color;
+}
+
+.menu-item:hover .label {
+	-fx-text-fill: -highlight-color;
+}
+
+.context-menu {
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.user-message-notice {
+	-fx-font-size: 13 pt;
+	-fx-font-weight: bold;
+	-fx-text-fill: -highlight-color;
+	-fx-background-color: derive(-theme-color, -20%);
+	-fx-border-color: -highlight-color;
+	-fx-border-width: 2 0 0 0;
+}
+
+.radio-status-notice {
+	-fx-text-fill: -highlight-color;
+}

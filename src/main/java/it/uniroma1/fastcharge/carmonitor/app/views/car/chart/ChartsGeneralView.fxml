@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="chartMainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar VBox.vgrow="ALWAYS">
+              <menus>
+                <Menu fx:id="fileMenu" mnemonicParsing="false">
+                  <items>
+                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" styleClass="menu-item-first" />
+                  </items>
+                </Menu>
+                <Menu fx:id="chartMenu" mnemonicParsing="false">
+                  <items>
+                    <MenuItem fx:id="viewPrevSessionMenuItem" mnemonicParsing="false" styleClass="menu-item-first" />
+                    <MenuItem fx:id="realChartMenuItem" mnemonicParsing="false" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="30.0" spacing="20.0" VBox.vgrow="NEVER">
+               <children>
+                  <JFXCheckBox fx:id="showGraphOne" checkedColor="#ffa603" text="Graph 1" textFill="#ef7f02" unCheckedColor="#ef7f02" />
+                  <JFXCheckBox fx:id="showGraphTwo" checkedColor="#ffa603" text="Graph 2" textFill="#ef7f02" unCheckedColor="#ef7f02" />
+                  <JFXCheckBox fx:id="showGraphThree" checkedColor="#ffa603" text="Graph 3" textFill="#ef7f02" unCheckedColor="#ef7f02" />
+                  <JFXCheckBox fx:id="showGraphFour" checkedColor="#ffa603" text="Graph 4" textFill="#ef7f02" unCheckedColor="#ef7f02" />
+               </children>
+               <padding>
+                  <Insets bottom="6.0" left="30.0" right="30.0" top="6.0" />
+               </padding>
+            </HBox>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <content>
+                  <SplitPane fx:id="chartsSplitPaneContainer" orientation="VERTICAL">
+                     <items>
+                     </items>
+                  </SplitPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

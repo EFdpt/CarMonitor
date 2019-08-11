@@ -1,0 +1,88 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'distribution'
+apply plugin: 'groovy'
+
+//apply from: 'gradle/gradle/helpers.gradle'
+ 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+ 	from {
+        (configurations.runtime).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }    
+    manifest {
+        attributes "Main-Class": "it.uniroma1.fastcharge.carmonitor.app.MainApp"
+    }
+}
+/*
+// Global Settings /////////////////////////////////////////////////////////////
+project.ext {
+	applicationVersion = "1.0-alpha"
+
+	applicationRelease = isApplicationRelease()
+	applicationDate = new Date()
+	applicationRevision = getRevision()
+
+	applicationVersionSnapshot = (!applicationRelease) ? "+SNAPSHOT.${asUTC(applicationDate, 'yyMMddHHmm')}.git${applicationRevision}" : ""
+	applicationVersionFull = "${applicationVersion}${applicationVersionSnapshot}"
+}
+
+// Gradle scripts and tasks ////////////////////////////////////////////////////
+
+apply from: 'gradle/gradle/packaging.innosetup.gradle' */
+
+// Projects settings  //////////////////////////////////////////////////////////
+
+repositories {
+    //mavenCentral()
+    jcenter()
+}
+
+dependencies {
+
+	implementation 'com.google.guava:guava:23.0'
+	implementation 'com.google.code.gson:gson:2.8.4'
+	
+	compile 'com.jfoenix:jfoenix:8.0.3'
+	compile 'com.fazecast:jSerialComm:2.0.2'
+	compile 'org.gillius:jfxutils:1.0'
+	
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+	
+	// https://mvnrepository.com/artifact/eu.hansolo/Medusa
+	compile group: 'eu.hansolo', name: 'Medusa', version: '5.7'
+	
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+	compile group: 'org.apache.commons', name: 'commons-csv', version: '1.1'
+	
+	// https://mvnrepository.com/artifact/commons-logging/commons-logging
+	compile group: 'commons-logging', name: 'commons-logging', version: '1.1.1'
+	
+
+	/* TEST GROUP */
+    testImplementation 'junit:junit:4.12'
+    
+    testCompile("org.testfx:testfx-core:4.0.13-alpha",
+				"org.testfx:testfx-junit:4.0.13-alpha",
+    			"org.codehaus.groovy:groovy-all:2.4.4",
+    			"org.spockframework:spock-core:1.0-groovy-2.4"
+    )
+    
+    testRuntime(
+            "com.athaydes:spock-reports:1.2.7"
+    )
+}
+
+mainClassName = "it.uniroma1.fastcharge.carmonitor.app.MainApp"
+
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java"]
+    }
+  }
+}
